@@ -298,7 +298,10 @@ const Blog = () => {
                 placeholder="Enter your email" 
                 className="flex-1 bg-primary-foreground/10 border-luxury-gold/20 text-primary-foreground placeholder:text-primary-foreground/60"
               />
-              <Button className="bg-gradient-luxury hover:opacity-90">
+              <Button className="bg-gradient-luxury hover:opacity-90"
+                     style={{ background: "var(--gradient-luxury)" }} // gradient background
+
+              >
                 Subscribe
               </Button>
             </div>

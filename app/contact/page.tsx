@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from 'lucide-react';
 import { locations, propertyTypes } from '@/data/properties';
+import PhoneInput from 'react-phone-input-2';
+
 
 const Contact = () => {
   const { toast } = useToast();
@@ -56,19 +58,19 @@ const Contact = () => {
     {
       icon: MapPin,
       title: 'Visit Our Office',
-      details: ['Westlands Road, Nairobi', 'Kenya, 00100'],
+      details: ['Riverside Square, Riverside drive Nairobi, Kenya'],
       action: 'Get Directions'
     },
     {
       icon: Phone,
       title: 'Call Us',
-      details: ['+254 700 123 456', '+254 711 987 654'],
+      details: ['+2547 68 096 084'],
       action: 'Call Now'
     },
     {
       icon: Mail,
       title: 'Email Us',
-      details: ['info@luxeconsult.com', 'sales@luxeconsult.com'],
+      details: ['hello@luxe-consult.com'],
       action: 'Send Email'
     },
     {
@@ -112,7 +114,8 @@ const Contact = () => {
                   <Card key={index} className="shadow-card">
                     <CardContent className="p-6">
                       <div className="flex items-start space-x-4">
-                        <div className="w-12 h-12 bg-gradient-luxury rounded-lg flex items-center justify-center flex-shrink-0">
+                        <div className="w-12 h-12 bg-gradient-luxury rounded-lg flex items-center justify-center flex-shrink-0"
+                        style={{ background: "var(--gradient-luxury)" }} > 
                           <info.icon className="w-6 h-6 text-primary" />
                         </div>
                         <div className="flex-1">
@@ -128,7 +131,7 @@ const Contact = () => {
               </div>
 
               {/* WhatsApp CTA */}
-              <Card className="bg-success text-success-foreground shadow-card">
+              {/* <Card className="bg-success text-success-foreground shadow-card">
                 <CardContent className="p-6 text-center">
                   <MessageCircle className="w-12 h-12 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">Quick WhatsApp Chat</h3>
@@ -144,7 +147,7 @@ const Contact = () => {
                     Chat on WhatsApp
                   </Button>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
           </div>
 
@@ -191,13 +194,14 @@ const Contact = () => {
                       <label className="text-sm font-medium text-foreground mb-2 block">
                         Phone Number *
                       </label>
-                      <Input
-                        value={formData.phone}
-                        onChange={(e) => handleInputChange('phone', e.target.value)}
-                        placeholder="Enter your phone number"
-                        required
-                      />
+                     <PhoneInput
+                      country={'ke'} 
+                      value={formData.phone}
+                      onChange={(phone) => handleInputChange('phone', phone)}
+                      inputClass="w-full h-12 text-black rounded-md border border-gray-300 px-3"
+                    />
                     </div>
+                   
                     <div>
                       <label className="text-sm font-medium text-foreground mb-2 block">
                         Subject *
@@ -283,6 +287,7 @@ const Contact = () => {
                   <Button
                     type="submit"
                     className="w-full bg-gradient-luxury hover:opacity-90 h-12"
+                    style={{ background: "var(--gradient-luxury)" }} 
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? (
@@ -309,7 +314,7 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Find Us</h2>
-            <p className="text-muted-foreground">Visit our office in the heart of Westlands, Nairobi</p>
+            <p className="text-muted-foreground">Visit our office in the heart of Riverside Square, Riverside drive Nairobi, Kenya</p>
           </div>
           
           <Card className="shadow-luxury overflow-hidden">
@@ -318,7 +323,7 @@ const Contact = () => {
                 <MapPin className="w-16 h-16 text-luxury-gold mx-auto mb-4" />
                 <h3 className="text-xl font-semibold text-foreground mb-2">Interactive Map</h3>
                 <p className="text-muted-foreground">
-                  Westlands Road, Nairobi, Kenya
+                Riverside Square, Riverside drive Nairobi, Kenya
                 </p>
               </div>
             </div>

@@ -45,13 +45,16 @@ const Footer = () => {
               in Nairobi's most prestigious locations.
             </p>
             <div className="flex space-x-4">
-              <Button variant="ghost" size="sm" className="p-2 hover:bg-luxury-gold/10">
+              <Button variant="ghost" size="sm" className="p-2 hover:bg-luxury-gold/10"
+                 onClick={() => window.open('https://www.facebook.com/YourPage', '_blank')} >
                 <Facebook className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="p-2 hover:bg-luxury-gold/10">
+              <Button variant="ghost" size="sm" className="p-2 hover:bg-luxury-gold/10"
+                  onClick={() => window.open('https://www.instagram.com/YourProfile', '_blank')} >
                 <Twitter className="w-5 h-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="p-2 hover:bg-luxury-gold/10">
+              <Button variant="ghost" size="sm" className="p-2 hover:bg-luxury-gold/10"
+                  onClick={() => window.open('https://www.tiktok.com/@YourProfile', '_blank')} >
                 <Instagram className="w-5 h-5" />
               </Button>
               <Button variant="ghost" size="sm" className="p-2 hover:bg-luxury-gold/10">
@@ -100,19 +103,19 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2 text-primary-foreground/80">
                 <MapPin className="w-4 h-4 text-luxury-gold" />
-                <span className="text-sm">Westlands, Nairobi Kenya</span>
+                <span className="text-sm">Riverside Square, Riverside drive Nairobi, Kenya</span>
               </div>
               <div className="flex items-center space-x-2 text-primary-foreground/80">
                 <Phone className="w-4 h-4 text-luxury-gold" />
-                <span className="text-sm">+254 700 123 456</span>
+                <span className="text-sm">+2547 68 096 084</span>
               </div>
               <div className="flex items-center space-x-2 text-primary-foreground/80">
                 <Mail className="w-4 h-4 text-luxury-gold" />
-                <span className="text-sm">info@luxeconsult.com</span>
+                <span className="text-sm">hello@luxe-consult.com</span>
               </div>
               <Button 
-                className="w-full bg-success hover:bg-success/90 text-success-foreground mt-4"
-                onClick={() => window.open('https://wa.me/254700123456', '_blank')}
+                className="w-full bg-success hover:bg-success/90 text-success-foreground mt-4 rounded-full"
+                onClick={() => window.open('https://wa.me/254768096084', '_blank')}
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
                 WhatsApp Us
@@ -122,7 +125,7 @@ const Footer = () => {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="mt-12 pt-8 border-t border-luxury-gold/20">
+        {/* <div className="mt-12 pt-8 border-t border-luxury-gold/20">
           <div className="max-w-md mx-auto text-center">
             <h3 className="text-lg font-semibold text-luxury-gold mb-2">Stay Updated</h3>
             <p className="text-primary-foreground/80 text-sm mb-4">
@@ -138,27 +141,18 @@ const Footer = () => {
               </Button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t border-luxury-gold/20 bg-primary/80 backdrop-blur">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-primary-foreground/60 text-sm">
-              © 2025 Luxe Consult. All rights reserved.
-            </p>
-            <div className="flex items-center space-x-6 text-sm">
-              <Link href="/privacy" className="text-primary-foreground/60 hover:text-luxury-gold transition-luxury">
-                Privacy Policy
-              </Link>
-              <Link href="/terms" className="text-primary-foreground/60 hover:text-luxury-gold transition-luxury">
-                Terms of Service
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
+     {/* Bottom Bar */}
+  <div className="border-t border-luxury-gold/20 bg-primary/80 backdrop-blur">
+    <div className="container mx-auto px-4 py-6 flex justify-center">
+      <p className="text-primary-foreground/60 text-sm text-center">
+        © 2025 Luxeconsult. All rights reserved.
+      </p>
+    </div>
+  </div>
+
     </footer>
   );
 };

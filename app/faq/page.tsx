@@ -21,7 +21,7 @@ const FAQ = () => {
         },
         {
           question: 'How long have you been in business?',
-          answer: 'Luxe Consult has been serving clients for over 15 years, establishing ourselves as one of Kenya\'s most trusted real estate consultancies with a proven track record of successful transactions.'
+          answer: 'Luxe Consult has been serving clients for over 2 years, establishing ourselves as one of Kenya\'s most trusted real estate consultancies with a proven track record of successful transactions.'
         },
         {
           question: 'Do you only deal with luxury properties?',
@@ -146,7 +146,7 @@ const FAQ = () => {
                 placeholder="Search FAQs..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 h-12 bg-background"
+                className="pl-10 h-12 bg-background text-black"
               />
             </div>
           </div>
@@ -186,7 +186,7 @@ const FAQ = () => {
                       variant="outline" 
                       size="sm" 
                       className="w-full text-xs"
-                      onClick={() => window.open('https://wa.me/254700123456', '_blank')}
+                      onClick={() => window.open('https://wa.me/+254768096084', '_blank')}
                     >
                       <MessageCircle className="w-4 h-4 mr-2" />
                       WhatsApp
@@ -203,8 +203,10 @@ const FAQ = () => {
               <div className="space-y-12">
                 {filteredFaqs.map((category, categoryIndex) => (
                   <div key={categoryIndex} id={`category-${categoryIndex}`}>
-                    <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center">
-                      <div className="w-8 h-8 bg-gradient-luxury rounded-lg flex items-center justify-center mr-3">
+                    <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center"  >
+                      <div className="w-8 h-8 bg-gradient-luxury rounded-lg flex items-center justify-center mr-3"   
+                       style={{ background: "var(--gradient-luxury)" }}
+                      >
                         <span className="text-primary font-bold text-sm">{category.category[0]}</span>
                       </div>
                       {category.category}
@@ -219,7 +221,7 @@ const FAQ = () => {
                           <Card key={questionIndex} className="shadow-card">
                             <Collapsible open={isOpen} onOpenChange={() => toggleItem(globalIndex)}>
                               <CollapsibleTrigger asChild>
-                                <button className="w-full p-6 text-left hover:bg-muted/50 transition-luxury">
+                                <button className="w-full p-6 text-left hover:bg-muted/50 transition-luxury" >
                                   <div className="flex justify-between items-center">
                                     <h3 className="text-lg font-semibold text-foreground pr-4">
                                       {faq.question}
@@ -274,12 +276,14 @@ const FAQ = () => {
               Our expert team is here to help. Contact us directly for personalized assistance with your real estate needs.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button className="bg-gradient-luxury hover:opacity-90">
+              {/* <Button className="bg-gradient-luxury hover:opacity-90">
                 Contact Us
-              </Button>
+              </Button> */}
               <Button 
                 variant="outline"
-                onClick={() => window.open('https://wa.me/254700123456', '_blank')}
+                className='transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg'
+                style={{ background: "var(--gradient-luxury)" }} 
+                onClick={() => window.open('https://wa.me/+254768096084', '_blank')}
               >
                 <MessageCircle className="w-4 h-4 mr-2" />
                 WhatsApp Chat

@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import PropertyCard from '@/components/PropertyCard';
-import { Search, MapPin, Users, Award, TrendingUp, Star } from 'lucide-react';
+import { Search, ShieldCheck, Users, Award, Star, MessageCircle, Handshake, LifeBuoy } from 'lucide-react';
 import { mockProperties, locations, propertyTypes } from '@/data/properties';
 
 export default function Home() {
@@ -13,8 +13,8 @@ export default function Home() {
   const stats = [
     { icon: Users, label: 'Happy Clients', value: '500+' },
     { icon: Award, label: 'Properties Sold', value: '1,200+' },
-    { icon: TrendingUp, label: 'Years Experience', value: '15+' },
-    { icon: Star, label: 'Client Satisfaction', value: '98%' }
+    { icon: Star, label: 'Client Satisfaction', value: '98%' },
+    { icon: MessageCircle, label: 'Client Interactions', value: '2000+' }
   ];
 
   const testimonials = [
@@ -44,7 +44,7 @@ export default function Home() {
       <section className="relative h-screen flex items-center justify-center">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/hero.jpg')" }}
+          style={{ backgroundImage: "url('/4.jpeg')" }}
 
         />
         <div className="absolute inset-0 bg-gradient-overlay" />
@@ -81,7 +81,10 @@ export default function Home() {
                       ))}
                     </SelectContent>
                   </Select>
-                  <Button className="h-12 bg-gradient-luxury hover:opacity-90">
+                  <Button
+                    className="h-12 flex items-center justify-center px-4 rounded-lg text-white transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+                    style={{ background: "var(--gradient-luxury)" }}
+                  >
                     <Search className="w-5 h-5 mr-2" />
                     Search
                   </Button>
@@ -98,9 +101,17 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center animate-slide-up">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-luxury rounded-full mb-4">
-                  <stat.icon className="w-8 h-8 text-primary" />
-                </div>
+              <div
+                className="inline-flex items-center justify-center w-16 h-16 rounded-full mb-4"
+                style={{ background: "var(--gradient-luxury)" }} // gradient background
+              >
+                <stat.icon
+                  className="w-8 h-8"        // increase icon size
+                  stroke="currentColor"         // ensures it uses color
+                  style={{ color: "hsl(var(--primary))" }} // set icon color
+                />
+              </div>
+
                 <div className="text-3xl font-bold text-foreground mb-2">{stat.value}</div>
                 <div className="text-muted-foreground">{stat.label}</div>
               </div>
@@ -126,19 +137,23 @@ export default function Home() {
             {featuredProperties.map((property) => (
               <PropertyCard 
               key={property.id}
-              property={property} />
+              property={property} 
               href={`/properties/${property.id}`}
+              />
             ))}
           </div>
 
+
           <div className="text-center">
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary"
-            >
-              View All Properties
-            </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300"
+          >
+            View All Properties
+          </Button>
+
+
           </div>
         </div>
       </section>
@@ -153,19 +168,54 @@ export default function Home() {
               </h2>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-gradient-luxury rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <Award className="w-4 h-4 text-primary" />
+                <div className="w-8 h-8 bg-gradient-luxury rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+                          style={{ background: "var(--gradient-luxury)" }} // gradient background
+                  >
+              <Handshake className="w-4 h-4 text-primary"
+                              />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold mb-2 text-luxury-gold">Trusted Network</h3>
+                  <p className="text-primary-foreground/80">
+                    Strong relationships with financial institutions, developers, and legal partners ensure smooth transactions.
+                  </p>
+                </div>
+              </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-gradient-luxury rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+                                          style={{ background: "var(--gradient-luxury)" }} // gradient background
+                >
+                    <ShieldCheck className="w-4 h-4 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2 text-luxury-gold">15+ Years Experience</h3>
+                    <h3 className="text-xl font-semibold mb-2 text-luxury-gold">Transparency & Integrity</h3>
                     <p className="text-primary-foreground/80">
-                      Proven track record in Nairobi's luxury real estate market with deep local expertise.
+                      Honest guidance, clear contracts, and no hidden fees — your trust is our top priority.
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-gradient-luxury rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-8 h-8 bg-gradient-luxury rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+                                          style={{ background: "var(--gradient-luxury)" }} // gradient background
+                >
+                    <LifeBuoy className="w-4 h-4 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2 text-luxury-gold">Ongoing Support</h3>
+                    <p className="text-primary-foreground/80">
+                      Assistance before, during, and after the sale or rental to ensure a seamless experience.
+                    </p>
+                  </div>
+                </div>
+
+
+{/*                 
+                <div className="flex items-start space-x-4">
+                  <div className="w-8 h-8 bg-gradient-luxury rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+                         style={{ background: "var(--gradient-luxury)" }} // gradient background
+                         > 
                     <MapPin className="w-4 h-4 text-primary" />
                   </div>
                   <div>
@@ -174,10 +224,12 @@ export default function Home() {
                       Exclusive access to properties in Kilimani, Karen, Westlands, and other premium areas.
                     </p>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex items-start space-x-4">
-                  <div className="w-8 h-8 bg-gradient-luxury rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                  <div className="w-8 h-8 bg-gradient-luxury rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+                         style={{ background: "var(--gradient-luxury)" }} // gradient background
+                         >
                     <Users className="w-4 h-4 text-primary" />
                   </div>
                   <div>

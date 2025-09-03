@@ -1,6 +1,9 @@
+"use client";
+
+import Image from "next/image";
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Award, Users, TrendingUp, Heart, Shield, Star } from 'lucide-react';
+import { Users, TrendingUp, Heart, Shield, Star, MessageCircle } from 'lucide-react';
 
 const About = () => {
   const values = [
@@ -60,16 +63,16 @@ const About = () => {
               About <span className="text-luxury-gold">Luxe Consult</span>
             </h1>
             <p className="text-xl text-primary-foreground/90 leading-relaxed">
-              For over 15 years, we've been Kenya's premier real estate consultancy, 
-              connecting discerning clients with exceptional properties in Nairobi's 
-              most prestigious neighborhoods.
+            Luxe Consult is a leading luxury real estate firm specializing in high end properties and
+             executive developments. Established in 2024, Luxe Consult has quickly emerged as a trusted name,
+              delivering tailored property solutions and setting new benchmarks in the industry.
             </p>
           </div>
         </div>
       </section>
 
       {/* Our Story */}
-      <section className="py-20">
+      {/* <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-6">
@@ -96,20 +99,22 @@ const About = () => {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <img 
+              <Image 
                 src="/src/assets/property1.jpg" 
                 alt="Luxury property"
+                fill
                 className="rounded-lg shadow-card w-full h-64 object-cover"
               />
-              <img 
+              <Image
                 src="/src/assets/property2.jpg" 
                 alt="Premium location"
+                fill
                 className="rounded-lg shadow-card w-full h-64 object-cover mt-8"
               />
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Mission & Vision */}
       <section className="py-20 bg-secondary">
@@ -118,8 +123,11 @@ const About = () => {
             <Card className="shadow-card">
               <CardContent className="p-8">
                 <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-luxury rounded-full flex items-center justify-center mx-auto mb-4">
-                    <TrendingUp className="w-8 h-8 text-primary" />
+                  <div className="w-16 h-16 bg-gradient-luxury rounded-full flex items-center justify-center mx-auto mb-4" 
+                                                  style={{ background: "var(--gradient-luxury)" }} 
+>
+                    <TrendingUp className="w-8 h-8 text-primary" 
+                    />
                   </div>
                   <h3 className="text-2xl font-bold text-foreground">Our Mission</h3>
                 </div>
@@ -134,8 +142,11 @@ const About = () => {
             <Card className="shadow-card">
               <CardContent className="p-8">
                 <div className="text-center mb-6">
-                  <div className="w-16 h-16 bg-gradient-luxury rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Star className="w-8 h-8 text-primary" />
+                  <div className="w-16 h-16 bg-gradient-luxury rounded-full flex items-center justify-center mx-auto mb-4"
+                                      style={{ background: "var(--gradient-luxury)" }} 
+>
+                    <Star className="w-8 h-8 text-primary" 
+                    />
                   </div>
                   <h3 className="text-2xl font-bold text-foreground">Our Vision</h3>
                 </div>
@@ -166,7 +177,9 @@ const About = () => {
             {values.map((value, index) => (
               <Card key={index} className="shadow-card text-center">
                 <CardContent className="p-6">
-                  <div className="w-16 h-16 bg-gradient-luxury rounded-full flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-gradient-luxury rounded-full flex items-center justify-center mx-auto mb-4"
+                                                 style={{ background: "var(--gradient-luxury)" }} 
+>
                     <value.icon className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-xl font-semibold text-foreground mb-3">{value.title}</h3>
@@ -197,9 +210,10 @@ const About = () => {
               <Card key={index} className="shadow-card">
                 <CardContent className="p-6">
                   <div className="text-center">
-                    <img 
+                    <Image
                       src={member.image} 
                       alt={member.name}
+                      fill
                       className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
                     />
                     <h3 className="text-xl font-semibold text-foreground mb-1">{member.name}</h3>
@@ -235,11 +249,13 @@ const About = () => {
                 View Properties
               </Button>
               <Button 
-                variant="outline" 
-                size="lg"
-                className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary"
+                variant="outline"
+                className='transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:text-white'
+                style={{ background: "var(--gradient-luxury)" }} 
+                onClick={() => window.open('https://wa.me/+254768096084', '_blank')}
               >
-                Contact Our Team
+                <MessageCircle className="w-4 h-4 mr-2" />
+                WhatsApp Chat
               </Button>
             </div>
           </div>

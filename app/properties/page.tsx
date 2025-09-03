@@ -112,6 +112,8 @@ const PropertiesPage = () => {
 
                   <Button 
                     className="h-12 bg-gradient-luxury hover:opacity-90"
+                    style={{ background: "var(--gradient-luxury)" }}
+
                     onClick={() => setShowFilters(!showFilters)}
                   >
                     <SlidersHorizontal className="w-5 h-5 mr-2" />

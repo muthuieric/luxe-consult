@@ -128,6 +128,7 @@ const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
 
                 <Button 
                   className="w-full bg-gradient-luxury hover:opacity-90"
+                  style={{ background: "var(--gradient-luxury)" }}
                   onClick={() => window.open(`/property/${property.id}`, '_blank')}
                 >
                   View Details

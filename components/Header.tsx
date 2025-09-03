@@ -28,8 +28,10 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-luxury rounded-lg flex items-center justify-center">
-              <span className="text-primary font-bold text-lg">L</span>
+            <div className="w-8 h-8 bg-gradient-luxury rounded-lg flex items-center justify-center"
+                            style={{ background: "var(--gradient-luxury)" }} // gradient background
+>
+              <span className="text-primary font-bold text-lg" >L</span>
             </div>
             <span className="font-serif text-2xl font-bold text-primary-foreground">
               Luxe Consult
@@ -57,15 +59,18 @@ const Header = () => {
           <div className="hidden lg:flex items-center space-x-4">
             <div className="flex items-center space-x-2 text-primary-foreground/80 text-sm">
               <Phone className="w-4 h-4" />
-              <span>+254 700 123 456</span>
+              <span>+2547 68 096 084</span>
             </div>
             <Button
               variant="outline"
               size="sm"
-              className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary"
+              className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300"
+              // className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary"
             >
               Get Started
             </Button>
+
+         
           </div>
 
           {/* Mobile Menu */}
@@ -94,7 +99,7 @@ const Header = () => {
                 <div className="pt-4 border-t border-luxury-gold/20">
                   <div className="flex items-center space-x-2 text-primary-foreground/80 text-sm mb-4">
                     <Phone className="w-4 h-4" />
-                    <span>+254 700 123 456</span>
+                    <span>+2547 68 096 084</span>
                   </div>
                   <div className="flex items-center space-x-2 text-primary-foreground/80 text-sm mb-4">
                     <Mail className="w-4 h-4" />
