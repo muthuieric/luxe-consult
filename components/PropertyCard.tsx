@@ -73,6 +73,7 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
           alt={property.title}
           width={400}
           height={256}
+          // unoptimized
           className="w-full h-64 object-cover group-hover:scale-105 transition-luxury"
         />
         <div className="absolute inset-0 bg-gradient-overlay opacity-0 group-hover:opacity-100 transition-luxury" />

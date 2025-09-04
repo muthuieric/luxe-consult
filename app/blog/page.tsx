@@ -109,7 +109,7 @@ const Blog = () => {
               Real Estate Insights
             </h1>
             <p className="text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-              Stay informed with the latest market trends, investment insights, and expert advice from Nairobi's real estate leaders.
+            {" Stay informed with the latest market trends, investment insights, and expert advice from Nairobi's real estate leaders."}
             </p>
           </div>
 

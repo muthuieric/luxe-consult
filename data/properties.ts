@@ -11,7 +11,7 @@ export const mockProperties: Property[] = [
     bedrooms: 4,
     bathrooms: 3,
     area: '2,500 sq ft',
-    image: '/src/assets/property1.jpg',
+    image: '/1.jpeg',
     featured: true
   },
   {
