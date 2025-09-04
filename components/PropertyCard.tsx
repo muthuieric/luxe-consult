@@ -2,12 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { MapPin, Bed, Bath, Square, Heart, Share2, GitCompare } from 'lucide-react';
-import { useState } from 'react';
-import { usePropertyComparison } from '@/hooks/usePropertyComparison';
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  MapPin,
+  Bed,
+  Bath,
+  Square,
+  Heart,
+  Share2,
+  GitCompare,
+} from "lucide-react";
+import { useState } from "react";
+import { usePropertyComparison } from "@/hooks/usePropertyComparison";
 
 interface Property {
   id: string;
@@ -15,7 +23,7 @@ interface Property {
   location: string;
   price: string;
   type: string;
-  status: 'For Sale' | 'For Rent';
+  status: "For Sale" | "For Rent";
   bedrooms: number;
   bathrooms: number;
   area: string;
@@ -25,18 +33,19 @@ interface Property {
 
 interface PropertyCardProps {
   property: Property;
-  href?: string; // Make the card clickable
+  href?: string;
   showCompare?: boolean;
 }
 
 const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps) => {
   const [isLiked, setIsLiked] = useState(false);
-  const { addToComparison, removeFromComparison, isInComparison } = usePropertyComparison();
+  const { addToComparison, removeFromComparison, isInComparison } =
+    usePropertyComparison();
 
   const handleShare = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (navigator.share) {
       navigator.share({
         title: property.title,
@@ -44,7 +53,9 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
         url: href || window.location.href,
       });
     } else {
-      navigator.clipboard.writeText(`${window.location.origin}${href || `/property/${property.id}`}`);
+      navigator.clipboard.writeText(
+        `${window.location.origin}${href || `/property/${property.id}`}`
+      );
     }
   };
 
@@ -65,7 +76,7 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
   };
 
   const CardContentWrapper = (
-    <Card className="group overflow-hidden shadow-card hover:shadow-luxury transition-luxury cursor-pointer">
+    <Card className="group overflow-hidden shadow-card hover:shadow-luxury transition-luxury cursor-pointer rounded-xl">
       {/* IMAGE & ACTIONS */}
       <div className="relative">
         <Image
@@ -73,17 +84,16 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
           alt={property.title}
           width={400}
           height={256}
-          // unoptimized
-          className="w-full h-64 object-cover group-hover:scale-105 transition-luxury"
+          className="w-full h-48 sm:h-64 object-cover group-hover:scale-105 transition-luxury"
         />
         <div className="absolute inset-0 bg-gradient-overlay opacity-0 group-hover:opacity-100 transition-luxury" />
 
         {/* Status Badge */}
         <Badge
-          className={`absolute top-4 left-4 ${
-            property.status === 'For Sale'
-              ? 'bg-success text-success-foreground'
-              : 'bg-luxury-gold text-primary'
+          className={`absolute top-3 left-3 text-xs px-2 py-0.5 ${
+            property.status === "For Sale"
+              ? "bg-success text-success-foreground"
+              : "bg-luxury-gold text-primary"
           }`}
         >
           {property.status}
@@ -91,27 +101,27 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
 
         {/* Featured Badge */}
         {property.featured && (
-          <Badge className="absolute top-4 right-14 bg-luxury-gold text-primary">
+          <Badge className="absolute top-3 right-16 bg-luxury-gold text-primary text-xs px-2 py-0.5">
             Featured
           </Badge>
         )}
 
         {/* Action Buttons */}
-        <div className="absolute top-4 right-4 flex flex-col space-y-2">
+        <div className="absolute top-3 right-3 flex flex-col space-y-2">
           <Button
             variant="ghost"
             size="sm"
-            className={`p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 ${
-              isLiked ? 'text-destructive' : 'text-foreground'
+            className={`p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 rounded-full ${
+              isLiked ? "text-destructive" : "text-foreground"
             }`}
             onClick={handleLike}
           >
-            <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
+            <Heart className={`w-4 h-4 ${isLiked ? "fill-current" : ""}`} />
           </Button>
           <Button
             variant="ghost"
             size="sm"
-            className="p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 text-foreground"
+            className="p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 rounded-full text-foreground"
             onClick={handleShare}
           >
             <Share2 className="w-4 h-4" />
@@ -120,8 +130,10 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
             <Button
               variant="ghost"
               size="sm"
-              className={`p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 ${
-                isInComparison(property.id) ? 'text-luxury-gold' : 'text-foreground'
+              className={`p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 rounded-full ${
+                isInComparison(property.id)
+                  ? "text-luxury-gold"
+                  : "text-foreground"
               }`}
               onClick={handleCompare}
             >
@@ -132,17 +144,19 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
       </div>
 
       {/* CARD CONTENT */}
-      <CardContent className="p-6">
-        <div className="space-y-4">
-          <div className="text-2xl font-bold text-luxury-gold">{property.price}</div>
-          <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-luxury">
+      <CardContent className="p-4 sm:p-6">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="text-lg sm:text-2xl font-bold text-luxury-gold">
+            {property.price}
+          </div>
+          <h3 className="text-base sm:text-lg font-semibold text-foreground group-hover:text-primary transition-luxury line-clamp-2">
             {property.title}
           </h3>
-          <div className="flex items-center space-x-2 text-muted-foreground">
-            <MapPin className="w-4 h-4" />
-            <span className="text-sm">{property.location}</span>
+          <div className="flex items-center space-x-2 text-muted-foreground text-xs sm:text-sm">
+            <MapPin className="w-4 h-4 shrink-0" />
+            <span className="truncate">{property.location}</span>
           </div>
-          <div className="flex items-center space-x-6 text-sm text-muted-foreground">
+          <div className="flex items-center space-x-4 text-xs sm:text-sm text-muted-foreground">
             <div className="flex items-center space-x-1">
               <Bed className="w-4 h-4" />
               <span>{property.bedrooms}</span>
@@ -157,11 +171,13 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
             </div>
           </div>
           <div className="flex items-center justify-between">
-            <Badge variant="outline" className="text-xs">{property.type}</Badge>
+            <Badge variant="outline" className="text-[10px] sm:text-xs">
+              {property.type}
+            </Badge>
             <Button
               variant="outline"
               size="sm"
-              className="opacity-0 group-hover:opacity-100 transition-luxury border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary"
+              className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-luxury"
             >
               View Details
             </Button>
@@ -171,8 +187,13 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
     </Card>
   );
 
-  // Wrap with Link if href exists
-  return href ? <Link href={href} className="block">{CardContentWrapper}</Link> : CardContentWrapper;
+  return href ? (
+    <Link href={href} className="block">
+      {CardContentWrapper}
+    </Link>
+  ) : (
+    CardContentWrapper
+  );
 };
 
 export default PropertyCard;

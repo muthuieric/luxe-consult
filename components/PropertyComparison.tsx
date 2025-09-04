@@ -1,10 +1,17 @@
+"use client";
+
 import Image from "next/image";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { usePropertyComparison } from '@/hooks/usePropertyComparison';
-import { MapPin, Bed, Bath, Square, X } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { usePropertyComparison } from "@/hooks/usePropertyComparison";
+import { MapPin, Bed, Bath, Square, X } from "lucide-react";
 
 interface PropertyComparisonProps {
   isOpen: boolean;
@@ -12,20 +19,26 @@ interface PropertyComparisonProps {
 }
 
 const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
-  const { comparisonList, removeFromComparison, clearComparison } = usePropertyComparison();
+  const { comparisonList, removeFromComparison, clearComparison } =
+    usePropertyComparison();
 
   if (comparisonList.length === 0) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-lg rounded-2xl shadow-lg">
           <DialogHeader>
-            <DialogTitle>Property Comparison</DialogTitle>
+            <DialogTitle className="text-xl font-semibold">
+              Property Comparison
+            </DialogTitle>
           </DialogHeader>
-          <div className="text-center py-16">
+          <div className="text-center py-12">
             <div className="text-6xl mb-4">🏠</div>
-            <h3 className="text-2xl font-semibold text-foreground mb-2">No Properties to Compare</h3>
-            <p className="text-muted-foreground">
-              Add properties to comparison by clicking the compare button on property cards.
+            <h3 className="text-lg font-semibold text-foreground mb-2">
+              No Properties to Compare
+            </h3>
+            <p className="text-muted-foreground text-sm max-w-xs mx-auto">
+              Add properties to comparison by clicking the compare button on
+              property cards.
             </p>
           </div>
         </DialogContent>
@@ -35,40 +48,52 @@ const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-xl">
         <DialogHeader>
           <div className="flex items-center justify-between">
-            <DialogTitle>Property Comparison ({comparisonList.length}/2)</DialogTitle>
-            <Button variant="outline" onClick={clearComparison} size="sm">
+            <DialogTitle className="text-lg md:text-xl font-semibold">
+              Property Comparison ({comparisonList.length}/2)
+            </DialogTitle>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={clearComparison}
+              className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary transition-colors"
+            >
               Clear All
             </Button>
           </div>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
           {comparisonList.map((property) => (
-            <Card key={property.id} className="relative">
+            <Card
+              key={property.id}
+              className="relative overflow-hidden rounded-xl border border-border shadow-md"
+            >
+              {/* Remove Button */}
               <Button
                 variant="ghost"
                 size="sm"
-                className="absolute top-2 right-2 z-10 bg-background/80 backdrop-blur-sm"
+                className="absolute top-2 right-2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background/90 rounded-full"
                 onClick={() => removeFromComparison(property.id)}
               >
                 <X className="w-4 h-4" />
               </Button>
 
-              <div className="relative">
+              {/* Image Section */}
+              <div className="relative w-full h-52 md:h-60">
                 <Image
-                  src={property.image} 
+                  src={property.image}
                   alt={property.title}
                   fill
-                  className="w-full h-48 object-cover"
+                  className="object-cover"
                 />
-                <Badge 
+                <Badge
                   className={`absolute top-4 left-4 ${
-                    property.status === 'For Sale' 
-                      ? 'bg-success text-success-foreground' 
-                      : 'bg-luxury-gold text-primary'
+                    property.status === "For Sale"
+                      ? "bg-success text-success-foreground"
+                      : "bg-luxury-gold text-primary"
                   }`}
                 >
                   {property.status}
@@ -80,26 +105,23 @@ const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
                 )}
               </div>
 
-              <CardContent className="p-6 space-y-4">
-                {/* Price */}
-                <div className="text-2xl font-bold text-luxury-gold">
+              {/* Card Content */}
+              <CardContent className="p-4 md:p-6 space-y-4">
+                <div className="text-xl font-bold text-luxury-gold">
                   {property.price}
                 </div>
 
-                {/* Title */}
-                <h3 className="text-lg font-semibold text-foreground">
+                <h3 className="text-base md:text-lg font-semibold text-foreground">
                   {property.title}
                 </h3>
 
-                {/* Location */}
-                <div className="flex items-center space-x-2 text-muted-foreground">
+                <div className="flex items-center space-x-2 text-muted-foreground text-sm">
                   <MapPin className="w-4 h-4" />
-                  <span className="text-sm">{property.location}</span>
+                  <span>{property.location}</span>
                 </div>
 
-                {/* Comparison Details */}
-                <div className="space-y-3">
-                  <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="space-y-3 text-sm">
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
                       <span className="text-muted-foreground">Property Type:</span>
                       <p className="font-medium">{property.type}</p>
@@ -110,26 +132,28 @@ const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4 text-sm">
+                  <div className="grid grid-cols-3 gap-4">
                     <div className="flex items-center space-x-1">
                       <Bed className="w-4 h-4 text-muted-foreground" />
-                      <span className="font-medium">{property.bedrooms} beds</span>
+                      <span>{property.bedrooms} beds</span>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Bath className="w-4 h-4 text-muted-foreground" />
-                      <span className="font-medium">{property.bathrooms} baths</span>
+                      <span>{property.bathrooms} baths</span>
                     </div>
                     <div className="flex items-center space-x-1">
                       <Square className="w-4 h-4 text-muted-foreground" />
-                      <span className="font-medium">{property.area}</span>
+                      <span>{property.area}</span>
                     </div>
                   </div>
                 </div>
 
-                <Button 
-                  className="w-full bg-gradient-luxury hover:opacity-90"
+                <Button
+                  className="w-full bg-gradient-luxury text-black font-semibold hover:opacity-90 transition"
                   style={{ background: "var(--gradient-luxury)" }}
-                  onClick={() => window.open(`/property/${property.id}`, '_blank')}
+                  onClick={() =>
+                    window.open(`/property/${property.id}`, "_blank")
+                  }
                 >
                   View Details
                 </Button>
@@ -137,16 +161,14 @@ const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
             </Card>
           ))}
 
-          {/* Add placeholder for second property if only one selected */}
+          {/* Placeholder when only one property selected */}
           {comparisonList.length === 1 && (
-            <Card className="border-2 border-dashed border-muted-foreground/30">
-              <CardContent className="flex items-center justify-center h-full min-h-[400px]">
-                <div className="text-center">
-                  <div className="text-4xl mb-4 text-muted-foreground">+</div>
-                  <p className="text-muted-foreground">
-                    Add another property to compare
-                  </p>
-                </div>
+            <Card className="border-2 border-dashed border-muted-foreground/30 flex items-center justify-center min-h-[400px] rounded-xl">
+              <CardContent className="text-center p-6">
+                <div className="text-5xl mb-4 text-muted-foreground">+</div>
+                <p className="text-sm text-muted-foreground">
+                  Add another property to compare
+                </p>
               </CardContent>
             </Card>
           )}
