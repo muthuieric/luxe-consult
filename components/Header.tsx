@@ -63,10 +63,19 @@ const Header = () => {
 
           {/* Contact & CTA (desktop) */}
           <div className="hidden lg:flex items-center space-x-3">
-            <div className="flex items-center space-x-1 text-gray-600 text-xs md:text-sm">
+            {/* <div className="flex items-center space-x-1 text-gray-600 text-xs md:text-sm">
               <Phone className="w-4 h-4 text-[hsl(var(--luxury-gold))]" />
               <span>+254 768 096 084</span>
-            </div>
+            </div> */}
+            <Button 
+              variant="ghost"
+              className="flex items-center space-x-1 text-gray-600 text-xs md:text-sm"
+               asChild>
+                  <a href="tel:+254700000000">
+                    <Phone className="w-4 h-4 mr-2 " />
+                    +254 768 096 084
+                  </a>
+            </Button>
             <Button
               variant="ghost"
               onClick={() => window.open("https://wa.me/254768096084", "_blank")}
@@ -107,28 +116,42 @@ const Header = () => {
                   );
                 })}
 
-                <div className="pt-5 border-t border-gray-200 space-y-3">
-                  <div className="flex items-center space-x-2 text-gray-600 text-sm">
-                    <Phone className="w-4 h-4 text-[hsl(var(--luxury-gold))]" />
-                    <span>+254 768 096 084</span>
-                  </div>
-                  <div className="flex items-center space-x-2 text-gray-600 text-sm">
-                    <Mail className="w-4 h-4 text-[hsl(var(--luxury-gold))]" />
-                    <span>info@luxeconsult.com</span>
-                  </div>
+<div className="pt-5 border-t border-gray-200 space-y-3">
+  {/* Email CTA */}
+  <Button
+    variant="ghost"
+    className="w-full flex items-center justify-start text-gray-700 "
+    asChild
+  >
+    <a href="mailto:info@luxeconsult.com">
+      <Mail className="w-4 h-4 mr-2 " />
+      info@luxeconsult.com
+    </a>
+  </Button>
 
-                  {/* WhatsApp CTA inside mobile drawer */}
-                  <Button
-                    variant="ghost"
-                    onClick={() =>
-                      window.open("https://wa.me/254768096084", "_blank")
-                    }
-                    className="w-full bg-[hsl(var(--luxury-gold))] text-black font-semibold flex items-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
-                  >
-                    <FaWhatsapp className="w-4 h-4 mr-2" />
-                    WhatsApp
-                  </Button>
-                </div>
+  {/* Phone CTA */}
+  <Button
+    variant="ghost"
+    className="w-full flex items-center justify-start text-gray-700 "
+    asChild
+  >
+    <a href="tel:+254768096084">
+      <Phone className="w-4 h-4 mr-2 " />
+      +254 768 096 084
+    </a>
+  </Button>
+
+  {/* WhatsApp CTA */}
+  <Button
+    variant="ghost"
+    onClick={() => window.open("https://wa.me/254768096084", "_blank")}
+    className="w-full bg-[hsl(var(--luxury-gold))] text-black font-semibold flex items-center justify-center transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+  >
+    <FaWhatsapp className="w-4 h-4 mr-2" />
+    WhatsApp
+  </Button>
+</div>
+
               </div>
             </SheetContent>
           </Sheet>

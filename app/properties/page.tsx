@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { mockProperties } from "@/data/properties";
+import properties from "@/data/properties.json"; // ✅ Import JSON instead of mockProperties
 import { usePropertyComparison } from "@/hooks/usePropertyComparison";
 import SearchFilters from "@/components/properties/SearchFilters";
 import PropertiesGrid from "@/components/properties/PropertiesGrid";
@@ -20,15 +20,15 @@ const PropertiesPage = () => {
 
   const { comparisonList } = usePropertyComparison();
 
-  // Filter properties
-  const filteredProperties = mockProperties.filter((property) => {
+  // ✅ Filter properties from JSON
+  const filteredProperties = properties.filter((property) => {
     const matchesSearch =
       property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       property.location.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesLocation =
       selectedLocation === "all-locations" ||
-      property.location.includes(selectedLocation);
+      property.location.toLowerCase().includes(selectedLocation.toLowerCase());
 
     const matchesType =
       selectedType === "All Types" || property.type === selectedType;
@@ -71,6 +71,7 @@ const PropertiesPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* ✅ Hero Section */}
       <section className="bg-primary text-primary-foreground py-12 md:py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4">
@@ -82,8 +83,8 @@ const PropertiesPage = () => {
           </p>
         </div>
       </section>
-    );
 
+      {/* ✅ Filters */}
       <SearchFilters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -104,6 +105,7 @@ const PropertiesPage = () => {
         clearFilters={clearFilters}
       />
 
+      {/* ✅ Properties Grid */}
       <PropertiesGrid
         filteredProperties={filteredProperties}
         comparisonList={comparisonList}
@@ -111,6 +113,7 @@ const PropertiesPage = () => {
         clearFilters={clearFilters}
       />
 
+      {/* ✅ Comparison Modal */}
       <PropertyComparisonModal
         isOpen={showComparison}
         onClose={() => setShowComparison(false)}

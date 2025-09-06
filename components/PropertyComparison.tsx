@@ -81,10 +81,10 @@ const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
                 <X className="w-4 h-4" />
               </Button>
 
-              {/* Image Section */}
+              {/* ✅ Fixed Image Section */}
               <div className="relative w-full h-52 md:h-60">
                 <Image
-                  src={property.image}
+                  src={property.images?.[0] ?? "/fallback.jpg"}
                   alt={property.title}
                   fill
                   className="object-cover"
@@ -152,7 +152,7 @@ const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
                   className="w-full bg-gradient-luxury text-black font-semibold hover:opacity-90 transition"
                   style={{ background: "var(--gradient-luxury)" }}
                   onClick={() =>
-                    window.open(`/property/${property.id}`, "_blank")
+                    window.open(`/properties/${property.id}`, "_blank")
                   }
                 >
                   View Details

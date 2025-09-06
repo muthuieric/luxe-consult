@@ -1,3 +1,4 @@
+"use client"
 // components/FeaturedProperties.tsx
 import { mockProperties } from "@/data/properties";
 import PropertyCard from "@/components/PropertyCard";
