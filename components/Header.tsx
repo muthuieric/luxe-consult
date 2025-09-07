@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Menu, Phone, Mail } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -97,6 +98,9 @@ const Header = () => {
               side="right"
               className="w-[260px] bg-white border-luxury-gold/20"
             >
+                {/* ✅ Accessible but hidden title */}
+    <SheetTitle className="sr-only">Mobile Navigation</SheetTitle>
+
               <div className="flex flex-col space-y-3 mt-8">
                 {navigation.map((item) => {
                   const active = isActivePath(item.href);

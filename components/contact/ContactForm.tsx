@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { locations, propertyTypes } from "@/data/properties";
+import { locations, propertyTypes } from "@/public/data/properties";
 import PhoneInput from "react-phone-input-2";
 
 const ContactForm = () => {

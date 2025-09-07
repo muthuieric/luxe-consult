@@ -1,4 +1,3 @@
-// components/Testimonials.tsx
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -38,17 +37,17 @@ export default function Testimonials() {
   ];
 
   return (
-    <section className="py-24 bg-secondary relative overflow-hidden">
+    <section className="py-20 sm:py-24 bg-secondary relative overflow-hidden">
       {/* Background Accent */}
       <div className="absolute inset-0 bg-[url('/luxury-pattern.png')] opacity-5 pointer-events-none" />
 
-      <div className="container mx-auto px-6 lg:px-12 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12 relative">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-4">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground mb-3 sm:mb-4">
             What Our Clients Say
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
             Don’t just take our word for it — here’s what our satisfied clients
             have to say.
           </p>
@@ -56,10 +55,7 @@ export default function Testimonials() {
 
         {/* Carousel */}
         <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
+          opts={{ align: "start", loop: true }}
           plugins={[Autoplay({ delay: 5000 })]}
           className="w-full"
         >
@@ -67,19 +63,19 @@ export default function Testimonials() {
             {testimonials.map((testimonial, index) => (
               <CarouselItem
                 key={index}
-                className="md:basis-1/2 lg:basis-1/3 px-4"
+                className="basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/3 px-2 sm:px-4"
               >
                 <Card className="shadow-card border border-border hover:border-luxury-gold transition-all duration-300 bg-background/80 backdrop-blur-sm">
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex items-center mb-3 sm:mb-4">
                       {[...Array(testimonial.rating)].map((_, i) => (
                         <Star
                           key={i}
-                          className="w-5 h-5 text-luxury-gold fill-current"
+                          className="w-4 h-4 sm:w-5 sm:h-5 text-luxury-gold fill-current"
                         />
                       ))}
                     </div>
-                    <p className="text-muted-foreground mb-6 italic">
+                    <p className="text-muted-foreground mb-4 sm:mb-6 italic">
                       “{testimonial.content}”
                     </p>
                     <div>

@@ -36,9 +36,10 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <HeroSection/>
-      <StatsSection />
       <FeaturedProperties />
       <WhyChooseUs />
+      <StatsSection />
+
 
 
        {/* Testimonials */}

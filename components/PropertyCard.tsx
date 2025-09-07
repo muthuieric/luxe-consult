@@ -101,26 +101,18 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
           <Button
             variant="ghost"
             size="sm"
-            className={`p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 ${
+            className={`p-2 bg-background/80 backdrop-blur-sm  ${
               isLiked ? "text-destructive" : "text-foreground"
             }`}
             onClick={handleLike}
           >
             <Heart className={`w-4 h-4 ${isLiked ? "fill-current" : ""}`} />
           </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 text-foreground"
-            onClick={handleShare}
-          >
-            <Share2 className="w-4 h-4" />
-          </Button>
           {showCompare && (
             <Button
               variant="ghost"
               size="sm"
-              className={`p-2 bg-background/80 backdrop-blur-sm hover:bg-background/90 ${
+              className={`p-2 bg-background/80 backdrop-blur-sm  ${
                 isInComparison(property.id) ? "text-luxury-gold" : "text-foreground"
               }`}
               onClick={handleCompare}
@@ -160,8 +152,8 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
             <Badge variant="outline" className="text-xs">{property.type}</Badge>
             <Button
               variant="outline"
-              size="sm"
-              className="opacity-0 group-hover:opacity-100 transition border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary"
+              size="lg"
+              className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300"
             >
               View Details
             </Button>

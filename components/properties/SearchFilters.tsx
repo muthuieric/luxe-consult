@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Card, CardContent } from "@/components/ui/card";
 import { SlidersHorizontal } from "lucide-react";
-import { locations, propertyTypes } from "@/data/properties";
+import { locations, propertyTypes } from "@/public/data/properties";
 
 const SearchFilters = ({
   searchTerm,

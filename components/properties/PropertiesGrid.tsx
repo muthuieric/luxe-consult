@@ -1,15 +1,45 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { GitCompare } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import PropertyCard from "@/components/PropertyCard";
 import Link from "next/link";
 
+interface PropertiesGridProps {
+  filteredProperties: any[];
+  comparisonList: any[];
+  setShowComparison: (val: boolean) => void;
+  clearFilters: () => void;
+  disablePagination?: boolean;
+}
+
 const PropertiesGrid = ({
   filteredProperties,
   comparisonList,
   setShowComparison,
   clearFilters,
-}: any) => {
+  disablePagination = false,
+}: PropertiesGridProps) => {
+  const itemsPerPage = 6;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(filteredProperties.length / itemsPerPage);
+
+  const currentProperties = disablePagination
+    ? filteredProperties
+    : filteredProperties.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+      );
+
+  const goToPage = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <section className="py-8 md:py-16">
       <div className="container mx-auto px-4">
@@ -34,13 +64,46 @@ const PropertiesGrid = ({
         </div>
 
         {filteredProperties.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {filteredProperties.map((property: any) => (
-              <Link key={property.id} href={`/properties/${property.id}`}>
-                <PropertyCard property={property} />
-              </Link>
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {currentProperties.map((property: any) => (
+                <Link key={property.id} href={`/properties/${property.id}`}>
+                  <PropertyCard property={property} />
+                </Link>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {!disablePagination && filteredProperties.length > itemsPerPage && (
+              <div className="flex justify-center mt-10 space-x-2">
+                <Button
+                  variant="outline"
+                  onClick={() => goToPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Prev
+                </Button>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <Button
+                    key={page}
+                    variant={page === currentPage ? "secondary" : "ghost"}
+                    onClick={() => goToPage(page)}
+                  >
+                    {page}
+                  </Button>
+                ))}
+
+                <Button
+                  variant="outline"
+                  onClick={() => goToPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                >
+                  Next
+                </Button>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center py-16">
             <div className="text-5xl mb-4">🏠</div>

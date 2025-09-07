@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import properties from "@/data/properties.json"; // ✅ Import JSON instead of mockProperties
+import { useState, useEffect } from "react";
 import { usePropertyComparison } from "@/hooks/usePropertyComparison";
 import SearchFilters from "@/components/properties/SearchFilters";
 import PropertiesGrid from "@/components/properties/PropertiesGrid";
 import PropertyComparisonModal from "@/components/properties/PropertyComparisonModal";
 
-const PropertiesPage = () => {
+export default function PropertiesPage() {
+  const [properties, setProperties] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("all-locations");
   const [selectedType, setSelectedType] = useState("All Types");
@@ -20,7 +20,21 @@ const PropertiesPage = () => {
 
   const { comparisonList } = usePropertyComparison();
 
-  // ✅ Filter properties from JSON
+  useEffect(() => {
+    fetch("/data/properties.json")
+      .then((res) => res.json())
+      .then((data) => setProperties(data))
+      .catch((err) => console.error("Failed to load properties:", err));
+  }, []);
+
+  if (!properties.length) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-lg text-primary-foreground">Loading properties...</p>
+      </div>
+    );
+  }
+
   const filteredProperties = properties.filter((property) => {
     const matchesSearch =
       property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -71,7 +85,7 @@ const PropertiesPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* ✅ Hero Section */}
+      {/* Hero Section */}
       <section className="bg-primary text-primary-foreground py-12 md:py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-5xl font-serif font-bold mb-4">
@@ -84,7 +98,7 @@ const PropertiesPage = () => {
         </div>
       </section>
 
-      {/* ✅ Filters */}
+      {/* Filters */}
       <SearchFilters
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -105,7 +119,7 @@ const PropertiesPage = () => {
         clearFilters={clearFilters}
       />
 
-      {/* ✅ Properties Grid */}
+      {/* Properties Grid */}
       <PropertiesGrid
         filteredProperties={filteredProperties}
         comparisonList={comparisonList}
@@ -113,13 +127,11 @@ const PropertiesPage = () => {
         clearFilters={clearFilters}
       />
 
-      {/* ✅ Comparison Modal */}
+      {/* Comparison Modal */}
       <PropertyComparisonModal
         isOpen={showComparison}
         onClose={() => setShowComparison(false)}
       />
     </div>
   );
-};
-
-export default PropertiesPage;
+}

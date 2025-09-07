@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Button } from '@/components/ui/button';
 import { FaWhatsapp } from "react-icons/fa";
-
 import { Facebook, Twitter, Instagram, Linkedin, MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
+import { SiTiktok } from "react-icons/si";
+
 
 const Footer = () => {
   const quickLinks = [
@@ -49,31 +50,39 @@ const Footer = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-2 hover:bg-luxury-gold/10"
-                onClick={() => window.open('https://www.facebook.com/YourPage', '_blank')}
+                className="p-2 backdrop-blur-sm"
+                onClick={() => window.open('https://www.facebook.com/people/Luxe-Consult/61559186923576/?rdid=0U4aj3MYXu3Y3dbl&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16G8qa8oxD%2F', '_blank')}
               >
                 <Facebook className="w-5 h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-2 hover:bg-luxury-gold/10"
-                onClick={() => window.open('https://twitter.com/YourProfile', '_blank')}
+                className="p-2 backdrop-blur-sm"
+                onClick={() => window.open('https://x.com/LuxeConsult?t=GjE4pvoY3ndYuoBx5DCneQ&s=09', '_blank')}
               >
                 <Twitter className="w-5 h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-2 hover:bg-luxury-gold/10"
-                onClick={() => window.open('https://www.instagram.com/YourProfile', '_blank')}
+                className="p-2 backdrop-blur-sm"
+                onClick={() => window.open('https://www.instagram.com/luxeconsult_ke/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D#', '_blank')}
               >
                 <Instagram className="w-5 h-5" />
               </Button>
               <Button
                 variant="ghost"
                 size="sm"
-                className="p-2 hover:bg-luxury-gold/10"
+                className="p-2 backdrop-blur-sm"
+                onClick={() => window.open('https://www.tiktok.com/@luxe.consult?_t=ZM-8u0qipgX7mI&_r=1', '_blank')}
+              >
+                <SiTiktok className="w-5 h-5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="p-2 backdrop-blur-sm"
                 onClick={() => window.open('https://www.linkedin.com/company/YourCompany', '_blank')}
               >
                 <Linkedin className="w-5 h-5" />
@@ -132,7 +141,7 @@ const Footer = () => {
                 <span className="text-sm">hello@luxe-consult.com</span>
               </div>
               <Button
-                className="w-full bg-success hover:bg-success/90 text-success-foreground mt-4 rounded-full"
+                className="w-full bg-success hover:bg-success/90 text-success-foreground mt-4 rounded-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
                 style={{ background: "var(--gradient-luxury)" }}
 
                 onClick={() => window.open('https://wa.me/254768096084', '_blank')}

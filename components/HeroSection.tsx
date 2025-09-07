@@ -1,62 +1,41 @@
-// components/HeroSection.tsx
-import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
-import { locations } from '@/data/properties';
-
+import Image from "next/image";
+import Link from "next/link";
 
 export default function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center justify-center">
+    <section className="relative h-[80vh] sm:h-[70vh] flex items-center justify-center">
       {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/4.jpeg')" }}
-      />
-      <div className="absolute inset-0 bg-gradient-overlay" />
+      <div className="absolute inset-0">
+        <Image
+          src="/p3.jpg" 
+          alt="Luxury Home"
+          fill
+          className="object-cover"
+          priority
+        />
+      </div>
+
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/20 to-black/50" />
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
-        <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
-          <h1 className="text-5xl md:text-7xl font-serif font-bold text-primary-foreground leading-tight">
+      <div className="relative z-10 container mx-auto px-6 text-center">
+        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white leading-snug">
             Find Your
             <span className="block text-luxury-gold">Dream Home</span>
           </h1>
-          <p className="text-xl md:text-2xl text-primary-foreground/90 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-xl mx-auto">
             {"Discover luxury properties in Nairobi's most prestigious locations with Kenya's premier real estate consultancy."}
           </p>
-            
-          {/* Search Bar */}
-          <Card className="bg-background/95 backdrop-blur-sm shadow-luxury max-w-4xl mx-auto">
-            <CardContent className="p-6">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div className="md:col-span-2">
-                  <Input placeholder="Search properties, locations..." className="h-12" />
-                </div>
-                <Select>
-                  <SelectTrigger className="h-12">
-                    <SelectValue placeholder="Location" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {locations.map((location) => (
-                      <SelectItem key={location} value={location.toLowerCase()}>
-                        {location}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Button
-                  className="h-12 flex items-center justify-center px-4 rounded-lg text-white transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
-                  style={{ background: "var(--gradient-luxury)" }}
-                >
-                  <Search className="w-5 h-5 mr-2" />
-                  Search
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
+
+          {/* CTA Button using Next.js Link */}
+          <Link
+            href="/properties"
+            className="inline-block mt-4 sm:mt-6 px-6 py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-full shadow-lg hover:shadow-xl transition-all"
+          >
+            Explore Properties
+          </Link>
         </div>
       </div>
     </section>

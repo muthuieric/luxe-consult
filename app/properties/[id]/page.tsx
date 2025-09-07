@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import properties from "@/data/properties.json";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,15 +10,31 @@ import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
 import { MapPin, Heart, Share2, ChevronLeft, ChevronRight } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-import { useState } from "react";
 
 const PropertyDetails = () => {
   const params = useParams();
   const { toast } = useToast();
+  const [properties, setProperties] = useState<any[]>([]);
   const [isLiked, setIsLiked] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // ✅ Get property from JSON
+  // ✅ Fetch properties from public folder
+  useEffect(() => {
+    fetch("/data/properties.json")
+      .then((res) => res.json())
+      .then((data) => setProperties(data))
+      .catch((err) => console.error("Failed to load properties:", err));
+  }, []);
+
+  if (!properties.length) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-primary-foreground">Loading property...</p>
+      </div>
+    );
+  }
+
+  // Get property by id
   const propertyId = Array.isArray(params.id) ? params.id[0] : params.id;
   const property = properties.find((p) => p.id === propertyId);
 
@@ -30,14 +46,15 @@ const PropertyDetails = () => {
     );
   }
 
+  // Image navigation
   const nextImage = () =>
     setCurrentImageIndex((prev) => (prev + 1) % property.images.length);
-
   const prevImage = () =>
     setCurrentImageIndex(
       (prev) => (prev - 1 + property.images.length) % property.images.length
     );
 
+  // Share functionality
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
@@ -53,7 +70,7 @@ const PropertyDetails = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* ✅ Gallery */}
+      {/* Gallery */}
       <section className="container mx-auto px-4 pt-24 pb-10">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Main Image */}
@@ -68,7 +85,6 @@ const PropertyDetails = () => {
               sizes="(max-width: 768px) 100vw, 75vw"
             />
 
-            {/* Overlay gradient */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none" />
 
             {/* Navigation Arrows */}
@@ -86,10 +102,18 @@ const PropertyDetails = () => {
             </button>
 
             {/* Status Badge */}
-            <Badge className="absolute top-4 left-4 text-xs md:text-sm px-2 md:px-3 py-1 rounded-full shadow-md">
-              {property.status}
-            </Badge>
+            <Badge
+          className={`absolute top-4 left-4 text-xs md:text-sm px-2 md:px-3 py-1 rounded-full shadow-md ${
+            property.status === "For Sale"
+              ? "bg-success text-success-foreground"
+              : "bg-luxury-gold text-primary"
+          }`}
+        >
+          {property.status}
+        </Badge>
           </div>
+      
+
 
           {/* Thumbnails */}
           <div className="lg:col-span-1 h-[100px] md:h-[400px] lg:h-[500px] overflow-x-auto lg:overflow-y-auto flex lg:flex-col space-x-3 lg:space-x-0 lg:space-y-3 custom-scrollbar">
@@ -117,7 +141,7 @@ const PropertyDetails = () => {
         </div>
       </section>
 
-      {/* ✅ Property Info */}
+      {/* Property Info */}
       <div className="container mx-auto px-4 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Main Content */}
@@ -176,7 +200,6 @@ const PropertyDetails = () => {
           <div>
             <Card className="sticky top-24">
               <CardContent className="p-6 space-y-4">
-                {/* Action Buttons */}
                 <div className="flex justify-end gap-2">
                   <Button
                     variant="ghost"
@@ -202,7 +225,7 @@ const PropertyDetails = () => {
                   variant="outline"
                   className="w-full flex items-center justify-center"
                   onClick={() =>
-                    window.open("https://wa.me/254700123456", "_blank")
+                    window.open(`https://wa.me/${property.whatsapp}`, "_blank")
                   }
                 >
                   <FaWhatsapp className="mr-2" /> WhatsApp
