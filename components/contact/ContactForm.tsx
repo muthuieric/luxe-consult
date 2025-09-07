@@ -66,7 +66,7 @@ const ContactForm = () => {
     <Card className="shadow-luxury rounded-xl">
       <CardContent className="p-6 sm:p-8">
         <h2 className="text-2xl font-bold mb-2">Send us a Message</h2>
-        <p className="text-muted-foreground mb-8">Fill out the form below and we'll get back to you as soon as possible.</p>
+        <p className="text-muted-foreground mb-8">{"Fill out the form below and we'll get back to you as soon as possible."}</p>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name + Email */}
