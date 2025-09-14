@@ -9,6 +9,7 @@ export default function HeroSection() {
         <Image
           src="/p3.jpg" 
           alt="Luxury Home"
+          quality={100}
           fill
           className="object-cover"
           priority

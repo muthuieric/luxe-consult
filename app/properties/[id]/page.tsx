@@ -132,7 +132,7 @@ const PropertyDetails = () => {
                   alt={`Thumbnail ${i + 1}`}
                   fill
                   className="object-cover"
-                  quality={80}
+                  quality={100}
                   sizes="20vw"
                 />
               </div>
@@ -224,9 +224,8 @@ const PropertyDetails = () => {
                 <Button
                   variant="outline"
                   className="w-full flex items-center justify-center"
-                  onClick={() =>
-                    window.open(`https://wa.me/${property.whatsapp}`, "_blank")
-                  }
+                  onClick={() => window.open("https://wa.me/254768096084", "_blank")}
+
                 >
                   <FaWhatsapp className="mr-2" /> WhatsApp
                 </Button>

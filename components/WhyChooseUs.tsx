@@ -75,6 +75,7 @@ export default function WhyChooseUs() {
               <Image
                 src="/6.jpeg"
                 alt="Luxury property"
+                quality={100}
                 fill
                 className="object-cover"
               />

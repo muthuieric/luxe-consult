@@ -72,6 +72,7 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
         <Image
           src={firstImage}
           alt={property.title}
+          quality={100}
           width={400}
           height={256}
           className="w-full h-64 object-cover group-hover:scale-105 transition"
