@@ -58,7 +58,7 @@ const PropertyComparison = ({ isOpen, onClose }: PropertyComparisonProps) => {
               variant="outline"
               size="sm"
               onClick={clearComparison}
-              className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary transition-colors"
+              className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300"
             >
               Clear All
             </Button>

@@ -52,11 +52,11 @@ const PropertiesGrid = ({
             <Button
               variant="outline"
               onClick={() => setShowComparison(true)}
-              className="border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-primary"
+              className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300"
             >
-              <GitCompare className="w-4 h-4 mr-2" />
+              <GitCompare className="w-4 h-4 mr-2"   />
               Compare
-              <Badge className="ml-2 bg-luxury-gold text-primary">
+              <Badge className="ml-2 bg-luxury-gold ">
                 {comparisonList.length}
               </Badge>
             </Button>
