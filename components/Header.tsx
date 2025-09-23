@@ -80,7 +80,7 @@ const Header = () => {
             <Button
               variant="ghost"
               onClick={() => window.open("https://wa.me/254768096084", "_blank")}
-              className="bg-[hsl(var(--luxury-gold))] text-black font-semibold flex items-center px-3 md:px-4 py-2 text-sm md:text-base transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="bg-[hsl(var(--luxury-gold))] text-black font-semibold flex items-center px-3 md:px-4 py-2 text-sm md:text-base transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:cursor-pointer"
             >
               <FaWhatsapp className="w-4 h-4 mr-2" />
               WhatsApp

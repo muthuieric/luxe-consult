@@ -78,7 +78,7 @@ const SearchFilters = ({
               </Select>
 
               <Button
-                className="h-12 bg-gradient-luxury hover:opacity-90"
+                className="h-12 bg-gradient-luxury hover:opacity-90 hover:cursor-pointer"
                 style={{ background: "var(--gradient-luxury)" }}
                 onClick={() => setShowFilters(!showFilters)}
               >
@@ -163,8 +163,11 @@ const SearchFilters = ({
                   />
                 </div>
 
-                <div className="flex justify-end">
-                  <Button variant="outline" onClick={clearFilters}>
+                <div className="flex justify-end ">
+                  <Button 
+                    variant="outline" 
+                    className="hover:cursor-pointer"
+                    onClick={clearFilters}>
                     Clear Filters
                   </Button>
                 </div>

@@ -95,7 +95,7 @@ export default function Home() {
           <Link href="/properties">
             <Button
               size="lg"
-              className="bg-[hsl(var(--luxury-gold))] text-black hover:bg-[hsl(var(--luxury-gold-dark))] transition-all duration-300"
+              className="bg-[hsl(var(--luxury-gold))] text-black hover:bg-[hsl(var(--luxury-gold-dark))] transition-all duration-300 hover:cursor-pointer"
             >
               Browse Properties
             </Button>
@@ -106,7 +106,7 @@ export default function Home() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white bg-white text-black hover:bg-gray-200 transition-all duration-300"
+              className="border-white bg-white text-black hover:bg-gray-200 transition-all duration-300 hover:cursor-pointer"
             >
               Contact Us
             </Button>

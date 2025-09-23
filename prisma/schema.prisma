@@ -1,0 +1,32 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Property {
+  id          Int       @id @default(autoincrement())
+  title       String
+  location    String
+  price       Int
+  type        String
+  status      String
+  bedrooms    Int
+  bathrooms   Int
+  area        Int?      // store sqft or sqm as number
+  description String?
+  amenities   Json
+  images      Image[]
+  createdAt   DateTime  @default(now())
+}
+
+model Image {
+  id         Int      @id @default(autoincrement())
+  url        String
+  propertyId Int
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+}

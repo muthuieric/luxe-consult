@@ -44,7 +44,7 @@ const FaqCategories = ({ faqs, activeCategory, setActiveCategory }: FaqCategorie
               <h4 className="text-sm font-semibold text-foreground mb-3">
                 Still have questions?
               </h4>
-              <div className="space-y-2">
+              <div className="space-y-2 hover:cursor-pointer">
                 <Button variant="outline" size="sm" className="w-full text-xs" asChild>
                   <a href="tel:+254700000000">
                     <Phone className="w-4 h-4 mr-2" />
@@ -54,7 +54,7 @@ const FaqCategories = ({ faqs, activeCategory, setActiveCategory }: FaqCategorie
                 <Button
                   variant="outline"
                   size="sm"
-                  className="w-full text-xs"
+                  className="w-full text-xs hover:cursor-pointer"
                   onClick={() => window.open("https://wa.me/+254768096084", "_blank")}
                 >
                   <FaWhatsapp className="w-4 h-4 mr-2" />

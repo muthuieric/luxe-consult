@@ -92,7 +92,7 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
 
         {/* Featured Badge */}
         {property.featured && (
-          <Badge className="absolute top-4 right-14 bg-luxury-gold text-primary">
+          <Badge className="absolute hover:cursor-pointer top-4 right-14 bg-luxury-gold text-primary">
             Featured
           </Badge>
         )}
@@ -102,7 +102,7 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
           <Button
             variant="ghost"
             size="sm"
-            className={`p-2 bg-background/80 backdrop-blur-sm  ${
+            className={`p-2  hover:cursor-pointer bg-background/80 backdrop-blur-sm  ${
               isLiked ? "text-destructive" : "text-foreground"
             }`}
             onClick={handleLike}
@@ -113,7 +113,7 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
             <Button
               variant="ghost"
               size="sm"
-              className={`p-2 bg-background/80 backdrop-blur-sm  ${
+              className={`p-2 hover:cursor-pointer bg-background/80 backdrop-blur-sm  ${
                 isInComparison(property.id) ? "text-luxury-gold" : "text-foreground"
               }`}
               onClick={handleCompare}
@@ -127,13 +127,13 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
       {/* CONTENT */}
       <CardContent className="p-6">
         <div className="space-y-4">
-          <div className="text-2xl font-bold text-luxury-gold">{property.price}</div>
+          <div className="text-2xl font-bold text-luxury-gold">Ksh {property.price}</div>
           <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition">
             {property.title}
           </h3>
           <div className="flex items-center space-x-2 text-muted-foreground">
             <MapPin className="w-4 h-4" />
-            <span className="text-sm">{property.location}</span>
+            <span className="text-sm">{property.location}, Nairobi</span>
           </div>
           <div className="flex items-center space-x-6 text-sm text-muted-foreground">
             <div className="flex items-center space-x-1">
@@ -146,7 +146,7 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
             </div>
             <div className="flex items-center space-x-1">
               <Square className="w-4 h-4" />
-              <span>{property.area}</span>
+              <span>{property.area} sqft</span>
             </div>
           </div>
           <div className="flex items-center justify-between">
@@ -154,7 +154,7 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
             <Button
               variant="outline"
               size="lg"
-              className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300"
+              className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300 hover:cursor-pointer"
             >
               View Details
             </Button>

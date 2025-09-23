@@ -16,6 +16,19 @@ export const propertyTypes = [
   'Land'
 ];
 
+export const amenitiesOptions = [
+  "Parking",
+  "High Speed Internet",
+  "Gym",
+  "24/7 Security",
+  "Swimming Pool",
+  "Garden",
+  "Private Garden",
+  "Garage",
+  "CCTV Surveillance",
+  "Smart Home System",
+];
+
 export const priceRanges = [
   { label: 'All Prices', min: 0, max: Infinity },
   { label: 'Under 10M', min: 0, max: 10000000 },

@@ -1,16 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    // ⚠️ Warning: this allows production builds to complete even if ESLint has errors.
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    // ⚠️ Warning: this allows production builds to complete even if type errors exist.
-    ignoreBuildErrors: true,
-  },
   images: {
-    qualities: [75, 100], // ✅ allow quality=100 and the default 75
+    // allow ik.imagekit.io & utfs.io (upload cdns)
+    remotePatterns: [
+      { protocol: "https", hostname: "ik.imagekit.io", pathname: "/tmf1uuhtr/**" },
+      { protocol: "https", hostname: "utfs.io", pathname: "**" },
+    ],
+    qualities: [75, 100], // removes quality-related warnings
   },
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
+
+
+        

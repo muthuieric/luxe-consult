@@ -15,10 +15,11 @@ const MapSection = () => {
 
         <Card className="shadow-lg rounded-xl overflow-hidden">
           <div className="bg-muted h-64 sm:h-96 flex flex-col items-center justify-center p-6">
-            <MapPin className="w-16 h-16 text-luxury-gold mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Interactive Map</h3>
+            <MapPin className="w-16 h-16 text-luxury-gold mb-4 " />
+            <h3 className="text-xl font-semibold mb-2 ">Interactive Map</h3>
             <Button
               variant="outline"
+              className="hover:cursor-pointer"
               onClick={() =>
                 window.open("https://maps.google.com?q=Riverside+Square", "_blank")
               }

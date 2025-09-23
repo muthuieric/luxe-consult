@@ -52,9 +52,9 @@ const PropertiesGrid = ({
             <Button
               variant="outline"
               onClick={() => setShowComparison(true)}
-              className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300"
+              className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300 "
             >
-              <GitCompare className="w-4 h-4 mr-2"   />
+              <GitCompare className="w-4 h-4 mr-2 "   />
               Compare
               <Badge className="ml-2 bg-luxury-gold ">
                 {comparisonList.length}
@@ -75,7 +75,7 @@ const PropertiesGrid = ({
 
             {/* Pagination */}
             {!disablePagination && filteredProperties.length > itemsPerPage && (
-              <div className="flex justify-center mt-10 space-x-2">
+              <div className="flex justify-center mt-10 space-x-2 hover:cursor-pointer">
                 <Button
                   variant="outline"
                   onClick={() => goToPage(currentPage - 1)}
@@ -96,6 +96,7 @@ const PropertiesGrid = ({
 
                 <Button
                   variant="outline"
+                  className="hover:cursor-pointer"
                   onClick={() => goToPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
@@ -115,7 +116,7 @@ const PropertiesGrid = ({
             </p>
             <Button
               onClick={clearFilters}
-              className="bg-gradient-luxury hover:opacity-90"
+              className="bg-gradient-luxury hover:opacity-90 "
             >
               Clear All Filters
             </Button>

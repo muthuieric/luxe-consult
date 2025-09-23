@@ -76,7 +76,7 @@ const ContactForm = () => {
           </div>
 
           {/* Phone + Subject */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
             <PhoneInput country="ke" value={formData.phone} onChange={phone => handleInputChange("phone", phone)} inputClass="!w-full !h-12 !text-black !rounded-lg !border !border-gray-300 px-3" containerClass="w-full" />
             <Select value={formData.subject} onValueChange={value => handleInputChange("subject", value)}>
               <SelectTrigger><SelectValue placeholder="Subject *" /></SelectTrigger>
@@ -91,7 +91,7 @@ const ContactForm = () => {
           </div>
 
           {/* Property Type + Location + Budget */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
             <Select value={formData.propertyType} onValueChange={value => handleInputChange("propertyType", value)}>
               <SelectTrigger><SelectValue placeholder="Property Type" /></SelectTrigger>
               <SelectContent>
@@ -121,7 +121,7 @@ const ContactForm = () => {
           {/* Message */}
           <Textarea value={formData.message} onChange={e => handleInputChange("message", e.target.value)} placeholder="Tell us more about your requirements..." rows={6} required />
 
-          <Button type="submit" className="w-full h-12 rounded-lg text-white font-semibold shadow-md" style={{ background: "var(--gradient-luxury)" }} disabled={isSubmitting}>
+          <Button type="submit" className="w-full text-black h-12 rounded-lg hover:cursor-pointer font-semibold shadow-md" style={{ background: "var(--gradient-luxury)" }} disabled={isSubmitting}>
             {isSubmitting ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
@@ -129,7 +129,7 @@ const ContactForm = () => {
               </>
             ) : (
               <>
-                <Send className="w-5 h-5 mr-2" /> Send Message
+                <Send className="w-5 h-5 mr-2 " /> Send Message
               </>
             )}
           </Button>
