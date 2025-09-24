@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Menu, Phone, Mail } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
+import Image from "next/image";
 
 
 const Header = () => {
@@ -29,17 +30,20 @@ const Header = () => {
       <div className="container mx-auto px-3 md:px-6">
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div
-              className="w-7 h-7 md:w-8 md:h-8 rounded-md flex items-center justify-center"
-              style={{ background: "var(--gradient-luxury)" }}
-            >
-              <span className="font-bold text-white text-sm">L</span>
-            </div>
-            <span className="font-serif text-lg md:text-xl font-bold text-gray-900">
-              Luxe Consult
-            </span>
-          </Link>
+        <Link href="/" className="flex items-center space-x-2">
+          <Image
+            src="/luxe-logo-2.png"
+            alt="Luxe Consult Logo"
+            width={120}  // small but visible
+            height={60} // adjust as needed
+            className="rounded-md object-cover"
+          />
+          {/* <span className="font-serif text-lg md:text-xl font-bold text-gray-900">
+            Luxe Consult
+          </span> */}
+        </Link>
+
+        
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">

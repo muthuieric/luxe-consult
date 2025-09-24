@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { FaWhatsapp } from "react-icons/fa";
 import { Facebook, Twitter, Instagram, Linkedin, MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
 import { SiTiktok } from "react-icons/si";
+import Image from "next/image";
 
 
 const Footer = () => {
@@ -36,12 +37,19 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Company Info */}
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-luxury rounded-lg flex items-center justify-center">
-                <span className="text-primary font-bold text-lg">L</span>
-              </div>
-              <span className="font-serif text-2xl font-bold text-luxury-gold">Luxe Consult</span>
+          <div className="space-y-2">
+              <Link href="/" className="flex flex-col items-center space-y-2">
+              {/* Logo Image */}
+              <Image
+                src="/luxe-logo-2.png" // replace with your actual logo path
+                alt="Luxe Consult Logo"
+                width={150} // adjust size for visibility
+                height={48}
+                className="rounded-md object-cover "
+              />
+              {/* <span className="font-serif text-2xl font-bold text-luxury-gold text-center">
+                Luxe Consult
+              </span> */}
             </Link>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               {"Your premier real estate partner in Kenya, connecting you with luxury properties in Nairobi's most prestigious locations."}
