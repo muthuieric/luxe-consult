@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import AdminPropertiesTable from "@/components/AdminPropertiesTable";
 
+export const dynamic = "force-dynamic"; // always fetch fresh data from DB
+
 export default async function AdminViewPage() {
   // Fetch all properties including images
   const properties = await prisma.property.findMany({
