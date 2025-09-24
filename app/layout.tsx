@@ -34,20 +34,20 @@ export const metadata: Metadata = {
     "Real Estate Kenya",
     "Luxury Apartments  Nairobi",
   ],
-  authors: [{ name: "Luxe Consult", url: "https://luxeconsult.com" }],
+  authors: [{ name: "Luxe Consult", url: "https://luxe-consult.com" }],
   creator: "Luxe Consult",
   publisher: "Luxe Consult",
 
   openGraph: {
     type: "website",
-    url: "https://luxeconsult.com",
+    url: "https://luxe-consult.com",
     title: "Luxe Consult – Luxury Real Estate in Kenya",
     description:
       "Find your dream home with Luxe Consult. Luxury houses, apartments, and commercial properties in Kenya.",
     siteName: "Luxe Consult",
     images: [
       {
-        url: "/og-image.jpg", // ✅ create a nice banner image inside /public
+        url: "/og-luxe-logo.png", // ✅ create a nice banner image inside /public
         width: 1200,
         height: 630,
         alt: "Luxe Consult Luxury Real Estate Kenya",
@@ -56,18 +56,18 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
 
-  twitter: {
-    card: "summary_large_image",
-    title: "Luxe Consult – Luxury Real Estate in Kenya",
-    description:
-      "Explore luxury homes, apartments, and commercial properties with Luxe Consult.",
-    creator: "@luxeconsult", // change if you have Twitter
-    images: ["/og-image.jpg"],
-  },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title: "Luxe Consult – Luxury Real Estate in Kenya",
+  //   description:
+  //     "Explore luxury homes, apartments, and commercial properties with Luxe Consult.",
+  //   creator: "@luxeconsult", // change if you have Twitter
+  //   images: ["/og-image.jpg"],
+  // },
 
-  metadataBase: new URL("https://luxeconsult.com"),
+  metadataBase: new URL("https://luxe-consult.com"),
   alternates: {
-    canonical: "https://luxeconsult.com",
+    canonical: "https://luxe-consult.com",
   },
 };
 
