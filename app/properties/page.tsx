@@ -1,6 +1,9 @@
 import { prisma } from "@/lib/prisma";
 import PropertiesClient from "./PropertiesClient";
 
+// ✅ always fetch fresh data from the DB
+export const dynamic = "force-dynamic";
+
 export default async function PropertiesPage() {
   // Fetch properties server-side with images relation
   const properties = await prisma.property.findMany({
