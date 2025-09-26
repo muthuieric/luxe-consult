@@ -284,7 +284,7 @@ const Blog = () => {
       </div>
 
       {/* Newsletter CTA */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      {/* <section className="py-20 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-2xl mx-auto space-y-6">
             <h2 className="text-3xl font-bold">
@@ -307,7 +307,7 @@ const Blog = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 };
