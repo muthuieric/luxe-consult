@@ -8,6 +8,9 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Bed, Bath, Square, Heart, Share2, GitCompare } from "lucide-react";
 import { useState } from "react";
 import { usePropertyComparison } from "@/hooks/usePropertyComparison";
+// import { sendGAEvent } from "@/lib/ga";
+import { sendGAEvent } from "@next/third-parties/google"
+
 
 interface Property {
   id: string;
@@ -66,7 +69,15 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
   };
 
   const CardContentWrapper = (
-    <Card className="group overflow-hidden shadow-card hover:shadow-luxury transition cursor-pointer">
+    <Card className="group overflow-hidden shadow-card hover:shadow-luxury transition cursor-pointer"
+       onClick={() => {
+          sendGAEvent({
+            event: "property_card_click",
+            value: property.id,
+            property_title: property.title,
+          });
+        }}
+      >
       {/* IMAGE */}
       <div className="relative">
         <Image
@@ -155,6 +166,16 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
               variant="outline"
               size="lg"
               className="border-[hsl(var(--luxury-gold))] text-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))] hover:text-black transition-colors duration-300 hover:cursor-pointer"
+              // onClick={(e) => {
+              //   e.preventDefault(); // prevents Link navigation firing too early
+              //   sendGAEvent({
+              //     event: "property_view_details",
+              //     value: property.id,
+              //     property_title: property.title,
+              //   });
+              //   // then navigate if needed:
+              //   window.location.href = `/properties/${property.id}`;
+              // }}
             >
               View Details
             </Button>

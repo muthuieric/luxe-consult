@@ -158,6 +158,7 @@ export default function PropertyForm() {
                 <div key={i} className="relative w-32 h-32 rounded overflow-hidden border">
                   <Image src={url} alt={`Uploaded ${i}`} fill quality={100} className="object-cover" />
                 </div>
+                
               ))}
             </div>
           )}
