@@ -138,7 +138,10 @@ const PropertyCard = ({ property, href, showCompare = true }: PropertyCardProps)
       {/* CONTENT */}
       <CardContent className="p-6">
         <div className="space-y-4">
-          <div className="text-2xl font-bold text-luxury-gold">Ksh {property.price}</div>
+          <div className="text-2xl font-bold text-luxury-gold">
+            {/* Ksh {property.price} */}
+            Ksh {Number(property.price).toLocaleString("en-KE")}
+            </div>
           <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition">
             {property.title}
           </h3>

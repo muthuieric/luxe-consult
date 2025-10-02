@@ -147,7 +147,8 @@ const PropertyDetailsClient = ({ property }: PropertyDetailsClientProps) => {
             <div>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                 <div className="text-2xl md:text-3xl font-bold text-luxury-gold">
-                  Ksh {property.price}
+                  {/* Ksh {property.price} */}
+                  Ksh {Number(property.price).toLocaleString("en-KE")}
                 </div>
                 <Badge variant="outline" className="text-sm md:text-base">
                   {property.type}
@@ -246,7 +247,7 @@ const PropertyDetailsClient = ({ property }: PropertyDetailsClientProps) => {
                   </div>
                   <div className="flex justify-between">
                     <span>Area:</span>
-                    <span>{property.area}</span>
+                    <span>{property.area}sqft</span>
                   </div>
                 </div>
               </CardContent>
