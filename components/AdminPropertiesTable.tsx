@@ -172,7 +172,7 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
           >
             {/* Images */}
             <div className="flex gap-2 p-2 overflow-x-auto md:flex-wrap md:w-64">
-              {prop.images.slice(0, 3).map((url, i) => (
+              {prop.images.slice(0, 10).map((url, i) => (
                 <div
                   key={i}
                   className="relative w-20 h-20 rounded overflow-hidden border flex-shrink-0"
@@ -182,6 +182,7 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
                     alt={prop.title}
                     fill
                     className="object-cover"
+                
                   />
                 </div>
               ))}
