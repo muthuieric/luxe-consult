@@ -1,16 +1,14 @@
 import { prisma } from "@/lib/prisma";
 import PropertiesClient from "./PropertiesClient";
 
-
-export const revalidate = 0; // disable ISR, always fetch fresh data
-// ✅ always fetch fresh data from the DB
-export const dynamic = "force-dynamic";
+// ✅ Cache indefinitely - only revalidate when triggered manually
+export const revalidate = false; // or you can omit this line
 
 export default async function PropertiesPage() {
   // Fetch properties server-side with images relation
   const properties = await prisma.property.findMany({
     orderBy: { createdAt: "desc" },
-    include: { images: true }, // 👈 include related images
+    include: { images: true },
   });
 
   // Transform each property so that `images` is just an array of URLs

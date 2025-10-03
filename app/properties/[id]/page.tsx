@@ -5,7 +5,7 @@ interface PropertyPageProps {
   params: Promise<{ id: string }>; // 👈 must be Promise
 }
 
-export const dynamic = "force-dynamic"; // always fetch fresh data from DB
+export const revalidate = false; 
 
 
 export default async function PropertyDetailsPage({ params }: PropertyPageProps) {

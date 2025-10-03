@@ -31,8 +31,9 @@ interface AdminPropertiesTableProps {
 
 export default function AdminPropertiesTable({ properties }: AdminPropertiesTableProps) {
   const [propsList, setPropsList] = useState(properties);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
-  // ✅ Filter + sort states
+  // Filter + sort states
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("all-locations");
   const [selectedType, setSelectedType] = useState("All Types");
@@ -41,26 +42,36 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
   const [selectedBathrooms, setSelectedBathrooms] = useState("all-bathrooms");
   const [priceRange, setPriceRange] = useState([0, 50000000]);
   const [showFilters, setShowFilters] = useState(false);
-  const [sortBy, setSortBy] = useState("newest"); // 👈 sorting state
+  const [sortBy, setSortBy] = useState("newest");
 
-  // ✅ Delete handler
+  // ✅ Fixed delete handler - now calls /api/properties?id=X
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this property?")) return;
 
+    setDeletingId(id);
     try {
-      const res = await fetch(`/api/delete/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/properties?id=${id}`, { 
+        method: "DELETE" 
+      });
+      
+      const data = await res.json();
+
       if (res.ok) {
+        // Remove from local state
         setPropsList((prev) => prev.filter((p) => p.id !== id));
+        alert("Property deleted successfully!");
       } else {
-        alert("Failed to delete property");
+        alert(`Failed to delete property: ${data.error || "Unknown error"}`);
       }
     } catch (err) {
-      console.error(err);
-      alert("Error deleting property");
+      console.error("Delete error:", err);
+      alert("Error deleting property. Please try again.");
+    } finally {
+      setDeletingId(null);
     }
   };
 
-  // ✅ Apply filters
+  // Apply filters
   const filteredProperties = propsList
     .filter((property) => {
       const matchesSearch =
@@ -99,7 +110,6 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
         matchesPrice
       );
     })
-    // ✅ Apply sorting
     .sort((a, b) => {
       if (sortBy === "newest") return b.id - a.id;
       if (sortBy === "oldest") return a.id - b.id;
@@ -108,7 +118,7 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
       return 0;
     });
 
-  // ✅ Clear filters
+  // Clear filters
   const clearFilters = () => {
     setSearchTerm("");
     setSelectedLocation("all-locations");
@@ -121,7 +131,7 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
 
   return (
     <div className="space-y-6">
-      {/* 🔹 Filters + Sorting (compact row) */}
+      {/* Filters + Sorting */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex-1">
           <SearchFilters
@@ -161,7 +171,7 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
         </div>
       </div>
 
-      {/* 🔹 Properties List */}
+      {/* Properties List */}
       {filteredProperties.length === 0 ? (
         <p className="text-gray-500">No properties match your filters.</p>
       ) : (
@@ -182,7 +192,6 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
                     alt={prop.title}
                     fill
                     className="object-cover"
-                
                   />
                 </div>
               ))}
@@ -196,7 +205,7 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
               <p className="text-sm text-gray-600">Type: {prop.type}</p>
               <p className="text-sm text-gray-600">Status: {prop.status}</p>
               <p className="text-sm text-gray-600">
-                Price: Ksh {prop.price} | Bedrooms: {prop.bedrooms} | Bathrooms:{" "}
+                Price: Ksh {prop.price.toLocaleString()} | Bedrooms: {prop.bedrooms} | Bathrooms:{" "}
                 {prop.bathrooms} | Area: {prop.area ?? "-"} sqft
               </p>
             </div>
@@ -206,8 +215,9 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
               <Button
                 className="bg-red-500 hover:bg-red-600 text-white w-full md:w-auto"
                 onClick={() => handleDelete(prop.id)}
+                disabled={deletingId === prop.id}
               >
-                Delete
+                {deletingId === prop.id ? "Deleting..." : "Delete"}
               </Button>
             </div>
           </div>

@@ -1,7 +1,9 @@
 // app/api/properties/route.ts
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 
+// CREATE Property
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -76,6 +78,10 @@ export async function POST(req: Request) {
       }
     );
 
+    // ✅ Revalidate the properties pages so new data shows immediately
+    revalidatePath('/properties');
+    revalidatePath('/admin');
+
     return NextResponse.json({
       success: true,
       property: result.property,
@@ -106,75 +112,38 @@ export async function GET() {
     );
   }
 }
-// // app/api/properties/route.ts
-// import { NextResponse } from "next/server";
-// import ImageKit from "imagekit";
-// import prisma from "@/lib/prisma";
 
-// const imagekit = new ImageKit({
-//   publicKey: process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY!,
-//   privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
-//   urlEndpoint: process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT!,
-// });
+// DELETE Property
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const propertyId = searchParams.get("id");
 
-// export async function POST(req: Request) {
-//   try {
-//     const formData = await req.formData();
+    if (!propertyId) {
+      return NextResponse.json(
+        { error: "Property ID is required" },
+        { status: 400 }
+      );
+    }
 
-//     const files = formData.getAll("files") as File[];
-//     const title = formData.get("title") as string;
-//     const location = formData.get("location") as string;
-//     const price = Number(formData.get("price"));
-//     const type = formData.get("type") as string;
-//     const status = formData.get("status") as string;
-//     const bedrooms = Number(formData.get("bedrooms"));
-//     const bathrooms = Number(formData.get("bathrooms"));
-//     const area = formData.get("area") ? Number(formData.get("area")) : null;
-//     const description = formData.get("description") as string | null;
-//     const amenities = formData.get("amenities")
-//       ? JSON.parse(formData.get("amenities") as string)
-//       : [];
+    // Delete property and related images (cascade delete if configured in schema)
+    await prisma.property.delete({
+      where: { id: Number(propertyId) },
+    });
 
-//     // Step 1: Create property
-//     const property = await prisma.property.create({
-//       data: {
-//         title,
-//         location,
-//         price,
-//         type,
-//         status,
-//         bedrooms,
-//         bathrooms,
-//         area,
-//         description,
-//         amenities,
-//       },
-//     });
+    // ✅ Revalidate after deleting
+    revalidatePath('/properties');
+    revalidatePath('/admin');
 
-//     // Step 2: Upload images to ImageKit + store in Prisma
-//     const uploadedImages = [];
-//     for (const file of files) {
-//       const buffer = Buffer.from(await file.arrayBuffer());
-
-//       const uploadRes = await imagekit.upload({
-//         file: buffer,
-//         fileName: file.name,
-//         folder: "/properties",
-//       });
-
-//       const savedImage = await prisma.image.create({
-//         data: {
-//           url: uploadRes.url,
-//           propertyId: property.id,
-//         },
-//       });
-
-//       uploadedImages.push(savedImage);
-//     }
-
-//     return NextResponse.json({ property, images: uploadedImages });
-//   } catch (error) {
-//     console.error("Property creation error:", error);
-//     return NextResponse.json({ error: "Failed to create property" }, { status: 500 });
-//   }
-// }
+    return NextResponse.json({
+      success: true,
+      message: "Property deleted successfully",
+    });
+  } catch (error) {
+    console.error("Failed to delete property:", error);
+    return NextResponse.json(
+      { error: "Failed to delete property" },
+      { status: 500 }
+    );
+  }
+}
