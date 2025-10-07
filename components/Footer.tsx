@@ -39,17 +39,18 @@ const Footer = () => {
           {/* Company Info */}
           <div className="space-y-2">
               <Link href="/" className="flex flex-col items-center space-y-2">
-              {/* Logo Image */}
-              <Image
+             
+              <span className="font-serif text-2xl font-bold text-luxury-gold text-center">
+                Luxe Consult
+              </span>
+               {/* Logo Image */}
+              {/* <Image
                 src="/luxe-logo-2.png" // replace with your actual logo path
                 alt="Luxe Consult Logo"
                 width={150} // adjust size for visibility
                 height={48}
                 className="rounded-md object-cover "
-              />
-              {/* <span className="font-serif text-2xl font-bold text-luxury-gold text-center">
-                Luxe Consult
-              </span> */}
+              /> */}
             </Link>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               {"Your premier real estate partner in Kenya, connecting you with luxury properties in Nairobi's most prestigious locations."}

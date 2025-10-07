@@ -73,8 +73,8 @@ export async function POST(req: Request) {
         return { property, images: createdImages };
       },
       {
-        maxWait: 10000, // Wait up to 10 seconds to start transaction
-        timeout: 15000, // Transaction timeout of 15 seconds
+        maxWait: 60000, // Wait up to 10 seconds to start transaction
+        timeout: 85000, // Transaction timeout of 15 seconds
       }
     );
 

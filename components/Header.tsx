@@ -31,16 +31,16 @@ const Header = () => {
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
-          <Image
+          {/* <Image
             src="/luxe-logo-2.png"
             alt="Luxe Consult Logo"
             width={120}  // small but visible
             height={60} // adjust as needed
             className="rounded-md object-cover"
-          />
-          {/* <span className="font-serif text-lg md:text-xl font-bold text-gray-900">
+          /> */}
+          <span className="font-serif text-2xl md:text-xl font-extrabold text-[hsl(var(--luxury-gold))]">
             Luxe Consult
-          </span> */}
+          </span>
         </Link>
 
         

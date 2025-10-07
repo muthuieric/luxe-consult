@@ -66,7 +66,7 @@ export default function PropertyForm() {
         console.error(`Failed to upload ${file.name}:`, error);
         throw error;
       }
-    }
+    } 
     
     return uploadedUrls;
   };
