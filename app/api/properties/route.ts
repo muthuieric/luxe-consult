@@ -3,6 +3,11 @@ import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 
+// Increase the timeout for this function
+// Vercel Hobby: 60s max
+// Vercel Pro: 300s max
+export const maxDuration = 90; // 90 seconds
+
 // CREATE Property
 export async function POST(req: Request) {
   try {
@@ -71,10 +76,13 @@ export async function POST(req: Request) {
         });
 
         return { property, images: createdImages };
+        return { property, imageCount: images.count };
       },
       {
         maxWait: 60000, // Wait up to 10 seconds to start transaction
         timeout: 85000, // Transaction timeout of 15 seconds
+        maxWait: 60000, // Wait up to 60 seconds to start transaction
+        timeout: 85000, // Transaction timeout of 85 seconds
       }
     );
 
@@ -86,6 +94,7 @@ export async function POST(req: Request) {
       success: true,
       property: result.property,
       images: result.images,
+      images: imageUrls.map((url: string) => ({ url, propertyId: result.property.id })),
     });
   } catch (error) {
     console.error("Property creation error:", error);
