@@ -4,28 +4,28 @@ import { Handshake, ShieldCheck, LifeBuoy, Users } from "lucide-react";
 export default function WhyChooseUs() {
   const features = [
     {
-      icon: Handshake,
-      title: "Trusted Network",
+      icon: Users,
+      title: "Comprehensive Consultation",
       description:
-        "Strong relationships with banks, developers, and legal partners ensure smooth, reliable transactions.",
+        "We begin by understanding your specific goals. Our consultative approach ensures every property aligns with your unique objectives.",
+    },
+    {
+      icon: Handshake,
+      title: "Personalized Property Experiences",
+      description:
+        "We craft every real estate journey to your lifestyle, whether it’s a serene family home in Karen or a high-yield apartment in Westlands.",
     },
     {
       icon: ShieldCheck,
-      title: "Transparency & Integrity",
+      title: "Seamless Implementation",
       description:
-        "Clear contracts, no hidden fees — your trust is our top priority.",
+        "We handle every step with precision and professionalism, facilitating smooth negotiations and documentation to secure your property with confidence.",
     },
     {
       icon: LifeBuoy,
-      title: "Ongoing Support",
+      title: "Post-Implementation Support",
       description:
-        "We’re here before, during, and after your property purchase or rental.",
-    },
-    {
-      icon: Users,
-      title: "Personalized Service",
-      description:
-        "Dedicated consultants who tailor solutions to your unique lifestyle and needs.",
+        "Our commitment doesn’t end at closing. We continue to support you long after the transaction to ensure your satisfaction.",
     },
   ];
 
@@ -43,8 +43,8 @@ export default function WhyChooseUs() {
               <span className="text-luxury-gold">Luxe Consult?</span>
             </h2>
             <p className="text-base sm:text-lg text-primary-foreground/80 max-w-xl">
-              We go beyond just transactions — we build trusted relationships and deliver
-              experiences that make luxury real estate seamless and rewarding.
+              At LUXE CONSULT, we are dedicated to transforming the way you experience real estate. 
+              We connect clients with exquisite homes, upscale apartments, and prime investment opportunities across Nairobi's prestigious neighborhoods.
             </p>
 
             <div className="grid gap-4 sm:gap-6">

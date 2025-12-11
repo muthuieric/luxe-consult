@@ -10,12 +10,12 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Call Us",
-    details: ["+2547 68 096 084"],
+    details: ["+254 768 096 084", "+254 769 90 91 90"],
   },
   {
     icon: Mail,
     title: "Email Us",
-    details: ["hello@luxe-consult.com"],
+    details: ["contact.luxeconsult@gmail.com"],
   },
   {
     icon: Clock,

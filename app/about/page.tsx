@@ -1,28 +1,51 @@
 import Image from "next/image";
 import { Card, CardContent } from '@/components/ui/card';
-import { Users, TrendingUp, Heart, Shield, Star } from 'lucide-react';
+import { Users, TrendingUp, Heart, Shield, Star, Lightbulb, Briefcase, Megaphone, Key } from 'lucide-react';
 
 const About = () => {
   const values = [
     {
       icon: Shield,
-      title: 'Trust & Integrity',
-      description: 'We maintain the highest standards of honesty and transparency in all our dealings.'
+      title: 'Integrity',
+      description: 'Upholding the highest ethical standards in every interaction, ensuring transparency and trust with our clients.'
     },
     {
-      icon: Heart,
-      title: 'Client-Centric',
-      description: 'Your satisfaction is our top priority. We go above and beyond to exceed expectations.'
+      icon: Lightbulb,
+      title: 'Innovation',
+      description: 'Continuously evolving and exploring new ways to address the unique property needs of each client.'
     },
     {
       icon: Star,
       title: 'Excellence',
-      description: 'We strive for perfection in every aspect of our service delivery.'
+      description: 'We go above and beyond to understand our clients’ needs and provide tailored solutions that exceed expectations.'
+    },
+    {
+      icon: Heart,
+      title: 'Client Success',
+      description: 'Your satisfaction is at the heart of what we do. We measure our success by the success of our clients, ensuring every interaction is meaningful.'
+    }
+  ];
+
+  const services = [
+    {
+      icon: Briefcase,
+      title: 'Property Advisory',
+      description: 'Empowering clients with expert advice on market trends, rental yields, and lucrative properties to make confident decisions.'
+    },
+    {
+      icon: Megaphone,
+      title: 'Real Estate Marketing',
+      description: 'Crafting tailored marketing campaigns using professional photography and digital platforms to showcase properties to the right audience.'
+    },
+    {
+      icon: Key,
+      title: 'Property Management',
+      description: 'Comprehensive management services including tenant sourcing, rent collection, and maintenance to ensure optimal returns.'
     },
     {
       icon: Users,
-      title: 'Collaboration',
-      description: 'We work closely with our clients to understand and fulfill their unique requirements.'
+      title: 'Agency',
+      description: 'Assisting clients in buying, selling, and leasing high-end residential and commercial properties, as well as acquiring prime land.'
     }
   ];
 
@@ -59,9 +82,9 @@ const About = () => {
             About <span className="text-luxury-gold">Luxe Consult</span>
           </h1>
           <p className="text-lg md:text-xl text-primary-foreground/90 leading-relaxed">
-            Luxe Consult is a leading luxury real estate firm specializing in high-end properties and
-            executive developments. Established in 2024, Luxe Consult has quickly emerged as a trusted name,
-            delivering tailored property solutions and setting new benchmarks in the industry.
+            LUXE CONSULT is a dynamic real estate consultancy and management company based in Nairobi, Kenya. 
+            We specialize in providing tailored solutions in property advisory, marketing, management, and project consultancy, 
+            ensuring our clients achieve their real estate goals with ease and efficiency.
           </p>
         </div>
       </section>
@@ -81,10 +104,9 @@ const About = () => {
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-foreground">Our Mission</h3>
                 </div>
-                <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                  To provide exceptional real estate consultancy services that exceed client 
-                  expectations while building lasting relationships based on trust, integrity, 
-                  and unparalleled market expertise.
+                <p className="text-muted-foreground leading-relaxed text-sm md:text-base text-center">
+                  We are dedicated to understanding the unique needs of each client, providing timely solutions, 
+                  and ensuring the highest standards of service in every transaction.
                 </p>
               </CardContent>
             </Card>
@@ -100,8 +122,9 @@ const About = () => {
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-foreground">Our Vision</h3>
                 </div>
-                <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
-                  {"To be East Africa's leading luxury real estate consultancy, renowned for our innovative approach, market leadership, and commitment to creating exceptional value for our clients and communities."}
+                <p className="text-muted-foreground leading-relaxed text-sm md:text-base text-center">
+                  To be the leading provider of luxury real estate solutions in Nairobi, known for our commitment to excellence, 
+                  personalized service, and transformative property experiences.
                 </p>
               </CardContent>
             </Card>
@@ -145,8 +168,41 @@ const About = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+      {/* Services Offered */}
       <section className="py-16 md:py-20 bg-secondary px-4">
+        <div className="container mx-auto">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
+              Services Offered
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Tailored solutions to meet all your real estate needs.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {services.map((service, index) => {
+              const IconComponent = service.icon;
+              return (
+                <Card key={index} className="shadow-card hover:shadow-lg transition-shadow duration-300">
+                  <CardContent className="p-6">
+                    <div className="mb-4">
+                      <IconComponent className="w-10 h-10 text-luxury-gold" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-foreground mb-3">{service.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {service.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Section */}
+      <section className="py-16 md:py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">

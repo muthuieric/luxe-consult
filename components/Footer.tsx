@@ -23,14 +23,6 @@ const Footer = () => {
     'Westlands'
   ];
 
-  const propertyTypes = [
-    'Apartments',
-    'Villas',
-    'Townhouses',
-    'Commercial',
-    'Land'
-  ];
-
   return (
     <footer className="bg-primary text-primary-foreground">
       {/* Main Footer Content */}
@@ -43,57 +35,24 @@ const Footer = () => {
               <span className="font-serif text-2xl font-bold text-luxury-gold text-center">
                 Luxe Consult
               </span>
-               {/* Logo Image */}
-              {/* <Image
-                src="/luxe-logo-2.png" // replace with your actual logo path
-                alt="Luxe Consult Logo"
-                width={150} // adjust size for visibility
-                height={48}
-                className="rounded-md object-cover "
-              /> */}
             </Link>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
-              {"Your premier real estate partner in Kenya, connecting you with luxury properties in Nairobi's most prestigious locations."}
+              Your premier real estate partner in Kenya, connecting you with luxury properties in Nairobi's most prestigious locations.
             </p>
             <div className="flex space-x-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="p-2 backdrop-blur-sm hover:cursor-pointer"
-                onClick={() => window.open('https://www.facebook.com/people/Luxe-Consult/61559186923576/?rdid=0U4aj3MYXu3Y3dbl&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F16G8qa8oxD%2F', '_blank')}
-              >
+              <Button variant="ghost" size="sm" className="p-2 backdrop-blur-sm hover:cursor-pointer" onClick={() => window.open('https://www.facebook.com/people/Luxe-Consult/61559186923576/', '_blank')}>
                 <Facebook className="w-5 h-5" />
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="p-2 backdrop-blur-sm hover:cursor-pointer"
-                onClick={() => window.open('https://x.com/LuxeConsult?t=GjE4pvoY3ndYuoBx5DCneQ&s=09', '_blank')}
-              >
+              <Button variant="ghost" size="sm" className="p-2 backdrop-blur-sm hover:cursor-pointer" onClick={() => window.open('https://x.com/LuxeConsult', '_blank')}>
                 <Twitter className="w-5 h-5" />
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="p-2 backdrop-blur-sm hover:cursor-pointer"
-                onClick={() => window.open('https://www.instagram.com/luxeconsult_ke/?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw%3D%3D#', '_blank')}
-              >
+              <Button variant="ghost" size="sm" className="p-2 backdrop-blur-sm hover:cursor-pointer" onClick={() => window.open('https://www.instagram.com/luxeconsult_ke/', '_blank')}>
                 <Instagram className="w-5 h-5" />
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="p-2 backdrop-blur-sm hover:cursor-pointer"
-                onClick={() => window.open('https://www.tiktok.com/@luxe.consult?_t=ZM-8u0qipgX7mI&_r=1', '_blank')}
-              >
+              <Button variant="ghost" size="sm" className="p-2 backdrop-blur-sm hover:cursor-pointer" onClick={() => window.open('https://www.tiktok.com/@luxe.consult', '_blank')}>
                 <SiTiktok className="w-5 h-5" />
               </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="p-2 backdrop-blur-sm hover:cursor-pointer" 
-                onClick={() => window.open('https://www.linkedin.com/company/YourCompany', '_blank')}
-              >
+              <Button variant="ghost" size="sm" className="p-2 backdrop-blur-sm hover:cursor-pointer" onClick={() => window.open('https://www.linkedin.com', '_blank')}>
                 <Linkedin className="w-5 h-5" />
               </Button>
             </div>
@@ -139,15 +98,15 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2 text-primary-foreground/80">
                 <MapPin className="w-4 h-4 text-luxury-gold" />
-                <span className="text-sm">Riverside Square, Riverside Drive, Nairobi, Kenya</span>
+                <span className="text-sm">Riverside Square, Riverside Drive, Nairobi</span>
               </div>
               <div className="flex items-center space-x-2 text-primary-foreground/80">
                 <Phone className="w-4 h-4 text-luxury-gold" />
-                <span className="text-sm">+254 768 096 084</span>
+                <span className="text-sm">+254 768 096 084 / +254 769 90 91 90</span>
               </div>
               <div className="flex items-center space-x-2 text-primary-foreground/80">
                 <Mail className="w-4 h-4 text-luxury-gold" />
-                <span className="text-sm">hello@luxe-consult.com</span>
+                <span className="text-sm">contact.luxeconsult@gmail.com</span>
               </div>
               <Button
                 className="w-full text-black font-semibold bg-success hover:bg-success/90 hover:cursor-pointer mt-4 rounded-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
@@ -162,34 +121,13 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Newsletter (optional, uncomment if needed) */}
-        {/* 
-        <div className="mt-12 pt-8 border-t border-luxury-gold/20">
-          <div className="max-w-md mx-auto text-center">
-            <h3 className="text-lg font-semibold text-luxury-gold mb-2">Stay Updated</h3>
-            <p className="text-primary-foreground/80 text-sm mb-4">
-              Get the latest property listings and market insights delivered to your inbox.
+        {/* Bottom Bar */}
+        <div className="border-t border-luxury-gold/20 bg-primary/80 backdrop-blur">
+          <div className="container mx-auto px-4 py-6 flex justify-center">
+            <p className="text-primary-foreground/60 text-sm text-center">
+              © 2025 Luxe Consult. All rights reserved.
             </p>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <Input
-                placeholder="Enter your email"
-                className="flex-1 bg-primary-foreground/10 border-luxury-gold/20 text-primary-foreground"
-              />
-              <Button className="bg-gradient-luxury hover:opacity-90">
-                Subscribe
-              </Button>
-            </div>
           </div>
-        </div> 
-        */}
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="border-t border-luxury-gold/20 bg-primary/80 backdrop-blur">
-        <div className="container mx-auto px-4 py-6 flex justify-center">
-          <p className="text-primary-foreground/60 text-sm text-center">
-            © 2025 Luxe Consult. All rights reserved.
-          </p>
         </div>
       </div>
     </footer>
