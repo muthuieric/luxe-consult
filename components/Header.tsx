@@ -82,13 +82,19 @@ const Header = () => {
                   </a>
             </Button>
             <Button
-              variant="ghost"
-              onClick={() => window.open("https://wa.me/254768096084", "_blank")}
-              className="bg-[hsl(var(--luxury-gold))] text-black font-semibold flex items-center px-3 md:px-4 py-2 text-sm md:text-base transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg hover:cursor-pointer"
-            >
-              <FaWhatsapp className="w-4 h-4 mr-2" />
-              WhatsApp
-            </Button>
+  asChild
+  // removed variant="ghost" to avoid hover conflicts
+  className="bg-[hsl(var(--luxury-gold))] hover:bg-[hsl(var(--luxury-gold))]/90 text-black font-semibold flex items-center px-3 md:px-4 py-2 text-sm md:text-base transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+>
+  <a
+    href="https://wa.me/254768096084"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <FaWhatsapp className="w-4 h-4 mr-2" />
+    WhatsApp
+  </a>
+</Button> 
           </div>
 
           {/* Mobile Menu */}

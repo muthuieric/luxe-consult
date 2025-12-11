@@ -108,14 +108,19 @@ const Footer = () => {
                 <Mail className="w-4 h-4 text-luxury-gold" />
                 <span className="text-sm">contact.luxeconsult@gmail.com</span>
               </div>
-              <Button
-                className="w-full text-black font-semibold bg-success hover:bg-success/90 hover:cursor-pointer mt-4 rounded-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
+                            <Button
+                asChild // ✅ This tells the component to behave like the child element (the <a> tag)
+                className="w-full text-black font-semibold mt-4 rounded-full transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
                 style={{ background: "var(--gradient-luxury)" }}
-
-                onClick={() => window.open('https://wa.me/254768096084', '_blank')}
               >
-                <FaWhatsapp className="w-4 h-4 mr-2" />
-                WhatsApp Us
+                <a
+                  href="https://wa.me/254768096084"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FaWhatsapp className="w-4 h-4 mr-2" />
+                  WhatsApp Us
+                </a>
               </Button>
             </div>
           </div>
