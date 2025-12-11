@@ -3,7 +3,7 @@ const nextConfig = {
   images: {
     // allow ik.imagekit.io & utfs.io (upload cdns)
     remotePatterns: [
-      { protocol: "https", hostname: "ik.imagekit.io", pathname: "/tmf1uuhtr/**" },
+      { protocol: "https", hostname: "ik.imagekit.io", pathname: "/oxbkzi14f/**" },
       { protocol: "https", hostname: "utfs.io", pathname: "**" },
     ],
     qualities: [75, 100], // removes quality-related warnings
