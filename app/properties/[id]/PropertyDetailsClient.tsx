@@ -220,7 +220,20 @@ const PropertyDetailsClient = ({ property }: PropertyDetailsClientProps) => {
                 >
                   Schedule Viewing
                 </Button>
-                <Button
+               <Button
+                      variant="outline"
+                      className="w-full" // 'flex' and 'items-center' are already built into the Button component
+                      asChild
+                    >
+                      <a 
+                        href="https://wa.me/254768096084" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                      >
+                        <FaWhatsapp className="mr-2" /> WhatsApp
+                      </a>
+                 </Button>
+                {/* <Button
                   variant="outline"
                   className="w-full flex items-center justify-center"
                   onClick={() =>
@@ -228,7 +241,7 @@ const PropertyDetailsClient = ({ property }: PropertyDetailsClientProps) => {
                   }
                 >
                   <FaWhatsapp className="mr-2" /> WhatsApp
-                </Button>
+                </Button> */}
 
                 <Separator />
 
