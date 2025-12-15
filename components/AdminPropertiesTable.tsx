@@ -4,6 +4,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import SearchFilters from "@/components/properties/SearchFilters";
+import PropertyForm from "@/components/PropertyForm"; 
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
@@ -33,6 +39,10 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
   const [propsList, setPropsList] = useState(properties);
   const [deletingId, setDeletingId] = useState<number | null>(null);
 
+  // Edit Modal State
+  const [editingProperty, setEditingProperty] = useState<Property | null>(null);
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
   // Filter + sort states
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLocation, setSelectedLocation] = useState("all-locations");
@@ -44,7 +54,7 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState("newest");
 
-  // ✅ Fixed delete handler - now calls /api/properties?id=X
+  // Delete Handler
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this property?")) return;
 
@@ -57,7 +67,6 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
       const data = await res.json();
 
       if (res.ok) {
-        // Remove from local state
         setPropsList((prev) => prev.filter((p) => p.id !== id));
         alert("Property deleted successfully!");
       } else {
@@ -178,46 +187,91 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
         filteredProperties.map((prop) => (
           <div
             key={prop.id}
-            className="bg-white shadow rounded-lg overflow-hidden border md:flex md:items-center md:justify-between"
+            className="bg-white shadow rounded-lg overflow-hidden border md:flex md:items-center md:justify-between p-4"
           >
-            {/* Images */}
-            <div className="flex gap-2 p-2 overflow-x-auto md:flex-wrap md:w-64">
-              {prop.images.slice(0, 10).map((url, i) => (
-                <div
-                  key={i}
-                  className="relative w-20 h-20 rounded overflow-hidden border flex-shrink-0"
-                >
-                  <Image
-                    src={url}
-                    alt={prop.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+            {/* Images - Horizontal Scroll */}
+            <div className="flex gap-2 overflow-x-auto w-full md:w-64 pb-2 md:pb-0 mb-4 md:mb-0 scrollbar-hide">
+              {prop.images.slice(0, 10).map((imageObj: any, i: number) => {
+                // Handle image object or string
+                const url = typeof imageObj === 'string' ? imageObj : imageObj.url;
+                return (
+                  <div
+                    key={i}
+                    className="relative w-20 h-20 rounded-md overflow-hidden border flex-shrink-0"
+                  >
+                    <Image
+                      src={url}
+                      alt={prop.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                );
+              })}
             </div>
 
             {/* Details */}
-            <div className="p-4 flex-1">
+            <div className="flex-1 md:px-6 space-y-1">
               <h2 className="font-bold text-lg">{prop.title}</h2>
-              <p className="text-sm text-gray-600">ID: {prop.id}</p>
-              <p className="text-sm text-gray-600">{prop.location}</p>
-              <p className="text-sm text-gray-600">Type: {prop.type}</p>
-              <p className="text-sm text-gray-600">Status: {prop.status}</p>
-              <p className="text-sm text-gray-600">
-                Price: Ksh {prop.price.toLocaleString()} | Bedrooms: {prop.bedrooms} | Bathrooms:{" "}
-                {prop.bathrooms} | Area: {prop.area ?? "-"} sqft
+              <div className="text-sm text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
+                <span>ID: {prop.id}</span>
+                <span>{prop.location}</span>
+                <span className="font-medium text-black">{prop.status}</span>
+                <span>{prop.type}</span>
+              </div>
+              <p className="text-sm font-semibold mt-1">
+                Ksh {prop.price.toLocaleString()} 
+                <span className="font-normal text-gray-500 ml-2">
+                  {prop.bedrooms} Bed | {prop.bathrooms} Bath | {prop.area ?? "-"} sqft
+                </span>
               </p>
             </div>
 
             {/* Actions */}
-            <div className="p-4 flex md:flex-col gap-2 md:gap-2 items-center md:items-start">
+            <div className="flex flex-col gap-2 w-full md:w-32 mt-4 md:mt-0">
+              
+              {/* EDIT DIALOG */}
+              <Dialog 
+                open={isEditOpen && editingProperty?.id === prop.id} 
+                onOpenChange={(open) => {
+                  setIsEditOpen(open);
+                  if (!open) setEditingProperty(null);
+                }}
+              >
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    className="w-full hover:bg-gray-100"
+                    onClick={() => {
+                      setEditingProperty(prop);
+                      setIsEditOpen(true);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </DialogTrigger>
+                
+                <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto w-[95%]">
+                  {/* Pass the property data to the form */}
+                  <PropertyForm 
+                    initialData={editingProperty} 
+                    onSuccess={() => {
+                      setIsEditOpen(false);
+                      setEditingProperty(null);
+                      // Trigger a manual refresh of the list if needed or rely on router.refresh() inside form
+                      setPropsList(prev => prev.map(p => p.id === editingProperty?.id ? { ...p, ...editingProperty } : p)); 
+                      window.location.reload(); // Hard reload to ensure data is fresh
+                    }} 
+                  />
+                </DialogContent>
+              </Dialog>
+
               <Button
-                className="bg-red-500 hover:bg-red-600 text-white w-full md:w-auto"
+                className="bg-red-500 hover:bg-red-600 text-white w-full"
                 onClick={() => handleDelete(prop.id)}
                 disabled={deletingId === prop.id}
               >
-                {deletingId === prop.id ? "Deleting..." : "Delete"}
+                {deletingId === prop.id ? "..." : "Delete"}
               </Button>
             </div>
           </div>

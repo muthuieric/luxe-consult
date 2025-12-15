@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -11,13 +11,37 @@ import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@
 import { locations, propertyTypes, amenitiesOptions } from "@/public/data/properties";
 import { upload } from "@imagekit/next";
 
-export default function PropertyForm() {
+// Define props to support editing mode
+type PropertyFormProps = {
+  initialData?: any; // If present, we are in "Edit" mode
+  onSuccess?: () => void; // Callback to close modal or redirect
+};
+
+export default function PropertyForm({ initialData, onSuccess }: PropertyFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [customAmenity, setCustomAmenity] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
+  
+  // Holds ALL images (both pre-existing URLs and newly uploaded ones)
+  const [images, setImages] = useState<string[]>([]);
+
+  // Initialize form with data if in Edit Mode
+  useEffect(() => {
+    if (initialData) {
+      // Set amenities
+      setSelectedAmenities(Array.isArray(initialData.amenities) ? initialData.amenities : []);
+      
+      // Set images (handle object structure from prisma: { id, url, ... })
+      if (initialData.images && Array.isArray(initialData.images)) {
+        const urlList = initialData.images.map((img: any) => 
+          typeof img === 'string' ? img : img.url
+        );
+        setImages(urlList);
+      }
+    }
+  }, [initialData]);
 
   // Authenticator for ImageKit
   const authenticator = async () => {
@@ -34,33 +58,16 @@ export default function PropertyForm() {
     }
   };
 
-  // Improved Parallel Upload Function
+  // Upload Logic (Parallel Uploads)
   const uploadImagesToImageKit = async (files: FileList): Promise<string[]> => {
     const fileArray = Array.from(files);
-    const totalBytes = fileArray.reduce((acc, file) => acc + file.size, 0);
-    let loadedBytes = 0;
-    
-    // Track individual file progress to prevent jumpy progress bars
-    const fileProgress = new Map<string, number>();
-
-    const updateGlobalProgress = (fileName: string, loaded: number) => {
-      fileProgress.set(fileName, loaded);
-      let totalLoaded = 0;
-      fileProgress.forEach((val) => (totalLoaded += val));
-      const percent = (totalLoaded / totalBytes) * 100;
-      setUploadProgress(percent);
-    };
-
-    // Concurrency Helper: Run max 3 uploads at a time
-    const CONCURRENCY_LIMIT = 3;
     const uploadedUrls: string[] = [];
     const errors: string[] = [];
 
-    const uploadSingleFile = async (file: File) => {
+    // Helper to upload a single file
+    const uploadSingle = async (file: File, index: number) => {
       try {
-        // Get fresh auth token for THIS specific file
         const authParams = await authenticator();
-        
         const response = await upload({
           file,
           fileName: `${Date.now()}_${file.name}`,
@@ -71,10 +78,10 @@ export default function PropertyForm() {
           publicKey: authParams.publicKey,
           urlEndpoint: authParams.urlEndpoint,
           onProgress: (event) => {
-             updateGlobalProgress(file.name, event.loaded);
+            // Rough global progress estimation
+            setUploadProgress(((index + event.loaded / event.total) / fileArray.length) * 100);
           },
         });
-        
         return response.url;
       } catch (err) {
         console.error(`Failed to upload ${file.name}`, err);
@@ -83,35 +90,22 @@ export default function PropertyForm() {
       }
     };
 
-    // Execute uploads in batches
-    const results = [];
-    const executing: Promise<any>[] = [];
-
-    for (const file of fileArray) {
-      const p = uploadSingleFile(file);
-      results.push(p);
-
-      // Add to executing array
-      const e: any = p.then(() => executing.splice(executing.indexOf(e), 1));
-      executing.push(e);
-
-      // If limit reached, wait for one to finish
-      if (executing.length >= CONCURRENCY_LIMIT) {
-        await Promise.race(executing);
-      }
+    // Run uploads sequentially to avoid rate limits/browser crashes on huge batches
+    // (You can also use Promise.all for small batches, but sequential is safer for "lots of MBs")
+    for (let i = 0; i < fileArray.length; i++) {
+      const url = await uploadSingle(fileArray[i], i);
+      if (url) uploadedUrls.push(url);
     }
-
-    // Wait for all remaining
-    const allResponses = await Promise.all(results);
-    
-    // Filter out failed uploads (nulls)
-    const successfulUrls = allResponses.filter((url): url is string => url !== null);
 
     if (errors.length > 0) {
       alert(`Some files failed to upload: ${errors.join(", ")}`);
     }
 
-    return successfulUrls;
+    return uploadedUrls;
+  };
+
+  const removeImage = (urlToRemove: string) => {
+    setImages((prev) => prev.filter((url) => url !== urlToRemove));
   };
 
   const toggleAmenity = (amenity: string) => {
@@ -140,20 +134,22 @@ export default function PropertyForm() {
     const fileInput = form.querySelector('input[type="file"]') as HTMLInputElement;
     
     try {
-      let imageUrls: string[] = [];
-      
-      // Step 1: Upload images if files are selected
+      // Step 1: Upload ANY NEW files selected
+      let newImageUrls: string[] = [];
       if (fileInput?.files && fileInput.files.length > 0) {
-        imageUrls = await uploadImagesToImageKit(fileInput.files);
-        setUploadedImages(imageUrls);
-        
-        if (imageUrls.length === 0) {
-           throw new Error("No images were successfully uploaded.");
-        }
+        newImageUrls = await uploadImagesToImageKit(fileInput.files);
       }
 
-      // Step 2: Create property with the URLs
+      // Step 2: Combine existing images with new uploads
+      const finalImageList = [...images, ...newImageUrls];
+
+      if (finalImageList.length === 0) {
+        throw new Error("At least one image is required. Please upload an image.");
+      }
+
+      // Step 3: Prepare Payload
       const propertyData = {
+        id: initialData?.id, // Important for updates!
         title: formData.get("title") as string,
         location: formData.get("location") as string,
         price: Number(formData.get("price")),
@@ -164,11 +160,13 @@ export default function PropertyForm() {
         area: formData.get("area") ? Number(formData.get("area")) : null,
         description: formData.get("description") as string | null,
         amenities: selectedAmenities,
-        imageUrls, 
+        imageUrls: finalImageList, 
       };
 
+      // Step 4: Send Request (POST for Create, PUT for Update)
+      const method = initialData ? "PUT" : "POST";
       const res = await fetch("/api/properties", {
-        method: "POST",
+        method: method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(propertyData),
       });
@@ -176,16 +174,21 @@ export default function PropertyForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || "Failed to create property");
+        throw new Error(data.error || "Operation failed");
       }
 
-      alert("Property created successfully!");
+      alert(initialData ? "Property updated successfully!" : "Property created successfully!");
       
-      form.reset();
-      setSelectedAmenities([]);
-      setUploadedImages([]);
-      setUploadProgress(0);
+      // Cleanup
+      if (!initialData) {
+        form.reset();
+        setSelectedAmenities([]);
+        setImages([]);
+        setUploadProgress(0);
+      }
+      
       router.refresh();
+      if (onSuccess) onSuccess(); // Close modal if provided
       
     } catch (err) {
       console.error(err);
@@ -196,27 +199,29 @@ export default function PropertyForm() {
   };
 
   return (
-    <Card className="shadow-luxury rounded-xl max-w-4xl mx-auto">
-      <CardContent className="p-6 sm:p-8">
-        <h2 className="text-2xl font-bold mb-4">Create Property</h2>
+    <Card className={`shadow-luxury rounded-xl w-full ${initialData ? 'border-none shadow-none' : 'max-w-4xl mx-auto'}`}>
+      <CardContent className={initialData ? "p-0" : "p-6 sm:p-8"}>
+        <h2 className="text-2xl font-bold mb-4">{initialData ? "Edit Property" : "Create Property"}</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
-          <Input name="title" placeholder="Title *" required />
+          <Input name="title" placeholder="Title *" defaultValue={initialData?.title} required />
 
-          <Select name="location" required>
-            <SelectTrigger><SelectValue placeholder="Select Location" /></SelectTrigger>
-            <SelectContent>
-              {locations.map(loc => <SelectItem key={loc} value={loc}>{loc}</SelectItem>)}
-            </SelectContent>
-          </Select>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Select name="location" defaultValue={initialData?.location} required>
+              <SelectTrigger><SelectValue placeholder="Select Location" /></SelectTrigger>
+              <SelectContent>
+                {locations.map(loc => <SelectItem key={loc} value={loc}>{loc}</SelectItem>)}
+              </SelectContent>
+            </Select>
 
-          <Select name="type" required>
-            <SelectTrigger><SelectValue placeholder="Property Type" /></SelectTrigger>
-            <SelectContent>
-              {propertyTypes.slice(1).map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
-            </SelectContent>
-          </Select>
+            <Select name="type" defaultValue={initialData?.type} required>
+              <SelectTrigger><SelectValue placeholder="Property Type" /></SelectTrigger>
+              <SelectContent>
+                {propertyTypes.slice(1).map(type => <SelectItem key={type} value={type}>{type}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
 
-          <Select name="status" required>
+          <Select name="status" defaultValue={initialData?.status} required>
             <SelectTrigger><SelectValue placeholder="Status" /></SelectTrigger>
             <SelectContent>
               <SelectItem value="For Sale">For Sale</SelectItem>
@@ -225,15 +230,16 @@ export default function PropertyForm() {
           </Select>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Input type="number" name="price" placeholder="Price (Ksh) *" required />
-            <Input type="number" name="area" placeholder="Area (sqft)" />
-            <Input type="number" name="bedrooms" placeholder="Bedrooms *" required />
+            <Input type="number" name="price" placeholder="Price (Ksh) *" defaultValue={initialData?.price} required />
+            <Input type="number" name="area" placeholder="Area (sqft)" defaultValue={initialData?.area || ""} />
+            <Input type="number" name="bedrooms" placeholder="Bedrooms *" defaultValue={initialData?.bedrooms} required />
           </div>
           
-          <Input type="number" name="bathrooms" placeholder="Bathrooms *" required />
+          <Input type="number" name="bathrooms" placeholder="Bathrooms *" defaultValue={initialData?.bathrooms} required />
 
-          <Textarea name="description" placeholder="Description" rows={4} />
+          <Textarea name="description" placeholder="Description" rows={4} defaultValue={initialData?.description || ""} />
 
+          {/* Amenities */}
           <div className="flex flex-col gap-2">
             <label className="font-medium">Amenities</label>
             <div className="flex flex-wrap gap-2">
@@ -276,41 +282,51 @@ export default function PropertyForm() {
                 {selectedAmenities.map((amenity, i) => (
                   <div key={i} className="bg-gray-100 px-3 py-1 rounded flex items-center gap-1 text-gray-800">
                     {amenity}
-                    <button type="button" onClick={() => toggleAmenity(amenity)} className="text-red-500 font-bold">×</button>
+                    <button type="button" onClick={() => toggleAmenity(amenity)} className="text-red-500 font-bold ml-1">×</button>
                   </div>
                 ))}
               </div>
             )}
           </div>
 
+          {/* Image Management */}
           <div>
             <label className="font-medium block mb-2">Property Images *</label>
-            <Input type="file" name="files" multiple accept="image/*" required />
-            <p className="text-sm text-gray-500 mt-1">
-              Supports bulk upload. Large files may take a moment.
+            
+            {/* Show Current Images */}
+            {images.length > 0 && (
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-4 mb-4">
+                {images.map((url, i) => (
+                  <div key={i} className="relative aspect-square rounded-lg overflow-hidden border group">
+                    <Image src={url} alt={`Property Image ${i + 1}`} fill className="object-cover" />
+                    {/* Delete Button */}
+                    <button
+                      type="button"
+                      onClick={() => removeImage(url)}
+                      className="absolute top-1 right-1 bg-red-600 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
+                      title="Remove image"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <Input type="file" name="files" multiple accept="image/*" />
+            <p className="text-xs text-gray-500 mt-1">
+              {initialData ? "Upload new images to append to the list." : "Supports bulk upload. Large files may take a moment."}
             </p>
           </div>
 
-          {loading && (
+          {/* Progress Bar */}
+          {loading && uploadProgress > 0 && (
             <div className="w-full">
               <div className="flex justify-between text-sm mb-1">
                 <span>Uploading...</span>
                 <span>{Math.round(uploadProgress)}%</span>
               </div>
               <progress value={uploadProgress} max={100} className="w-full h-2 rounded overflow-hidden"></progress>
-            </div>
-          )}
-
-          {uploadedImages.length > 0 && (
-            <div>
-              <label className="font-medium block mb-2">Uploaded Images</label>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {uploadedImages.map((url, i) => (
-                  <div key={i} className="relative w-full h-32 rounded overflow-hidden border">
-                    <Image src={url} alt={`Uploaded ${i + 1}`} fill className="object-cover" />
-                  </div>
-                ))}
-              </div>
             </div>
           )}
 
@@ -326,7 +342,7 @@ export default function PropertyForm() {
                 Processing...
               </>
             ) : (
-              "Create Property"
+              initialData ? "Update Property" : "Create Property"
             )}
           </Button>
         </form>

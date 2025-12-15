@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 // Increase the timeout for this function
 // Vercel Hobby: 60s max
 // Vercel Pro: 300s max
-export const maxDuration = 90; // 90 seconds
+export const maxDuration = 60; // 60 seconds
 
 // CREATE Property
 export async function POST(req: Request) {
@@ -43,7 +43,6 @@ export async function POST(req: Request) {
     }
 
     // Step 1: Create property with transaction to ensure atomicity
-    // Increase timeout for larger uploads (10 seconds)
     const result = await prisma.$transaction(
       async (tx) => {
         // Create the property
@@ -76,13 +75,10 @@ export async function POST(req: Request) {
         });
 
         return { property, images: createdImages };
-        return { property, imageCount: images.count };
       },
       {
-        maxWait: 60000, // Wait up to 10 seconds to start transaction
-        timeout: 85000, // Transaction timeout of 15 seconds
-        maxWait: 60000, // Wait up to 60 seconds to start transaction
-        timeout: 85000, // Transaction timeout of 85 seconds
+        maxWait: 5000, // Wait up to 5 seconds to start transaction
+        timeout: 10000, // Transaction timeout of 10 seconds
       }
     );
 
@@ -94,7 +90,6 @@ export async function POST(req: Request) {
       success: true,
       property: result.property,
       images: result.images,
-      images: imageUrls.map((url: string) => ({ url, propertyId: result.property.id })),
     });
   } catch (error) {
     console.error("Property creation error:", error);
@@ -102,6 +97,71 @@ export async function POST(req: Request) {
       { error: "Failed to create property" },
       { status: 500 }
     );
+  }
+}
+
+// UPDATE Property (PUT)
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+    const {
+      id,
+      title,
+      location,
+      price,
+      type,
+      status,
+      bedrooms,
+      bathrooms,
+      area,
+      description,
+      amenities,
+      imageUrls, 
+    } = body;
+
+    if (!id) return NextResponse.json({ error: "Property ID is required" }, { status: 400 });
+
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Update basic details
+      const property = await tx.property.update({
+        where: { id },
+        data: {
+          title,
+          location,
+          price,
+          type,
+          status,
+          bedrooms,
+          bathrooms,
+          area,
+          description,
+          amenities,
+        },
+      });
+
+      // 2. Sync Images: Delete old ones and re-add the current list
+      // This is a simple strategy to handle added/removed images
+      await tx.image.deleteMany({ where: { propertyId: id } });
+      
+      if (imageUrls && imageUrls.length > 0) {
+        await tx.image.createMany({
+          data: imageUrls.map((url: string) => ({
+            url,
+            propertyId: id,
+          })),
+        });
+      }
+
+      return property;
+    });
+
+    revalidatePath("/properties");
+    revalidatePath("/admin");
+
+    return NextResponse.json({ success: true, property: result });
+  } catch (error) {
+    console.error("Update error:", error);
+    return NextResponse.json({ error: "Failed to update property" }, { status: 500 });
   }
 }
 
