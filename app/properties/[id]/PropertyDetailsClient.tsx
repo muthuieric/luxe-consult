@@ -170,10 +170,19 @@ const PropertyDetailsClient = ({ property }: PropertyDetailsClientProps) => {
               <h2 className="text-xl md:text-2xl font-semibold mb-4">
                 Description
               </h2>
-              <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
+              {/* <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                 {property.description}
-              </p>
+              </p> */}
+              <div 
+                className="prose max-w-none
+                  [&_ul]:list-disc [&_ul]:pl-5 
+                  [&_ol]:list-decimal [&_ol]:pl-5 
+                  [&_li]:my-1"
+                dangerouslySetInnerHTML={{ __html: property.description }} 
+              />
             </div>
+
+
 
             <Separator />
 
@@ -251,6 +260,14 @@ const PropertyDetailsClient = ({ property }: PropertyDetailsClientProps) => {
                     <span>LC-{property.id}</span>
                   </div>
                   <div className="flex justify-between">
+                    <span>Location:</span>
+                    <span>{property.location}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Price:</span>
+                    <span>Ksh {Number(property.price).toLocaleString("en-KE")} </span>
+                  </div>
+                  <div className="flex justify-between">
                     <span>Bedrooms:</span>
                     <span>{property.bedrooms}</span>
                   </div>
@@ -259,9 +276,17 @@ const PropertyDetailsClient = ({ property }: PropertyDetailsClientProps) => {
                     <span>{property.bathrooms}</span>
                   </div>
                   <div className="flex justify-between">
+                    <span>Property Type:</span>
+                    <span>{property.type}</span>
+                  </div>
+                  {/* <div className="flex justify-between">
                     <span>Area:</span>
                     <span>{property.area}sqft</span>
-                  </div>
+                  </div> */}
+                   {/* <div className="flex justify-between">
+                    <span>Title:</span>
+                    <span>{property.title}</span>
+                  </div> */}
                 </div>
               </CardContent>
             </Card>
