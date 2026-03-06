@@ -139,7 +139,7 @@ const Header = () => {
   >
     <a href="mailto:info@luxeconsult.com">
       <Mail className="w-4 h-4 mr-2 " />
-      info@luxeconsult.com
+      contact.luxeconsult@gmail.com
     </a>
   </Button>
 
