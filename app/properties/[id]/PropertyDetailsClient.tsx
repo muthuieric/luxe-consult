@@ -173,15 +173,26 @@ const PropertyDetailsClient = ({ property }: PropertyDetailsClientProps) => {
               {/* <p className="text-muted-foreground leading-relaxed text-sm md:text-base">
                 {property.description}
               </p> */}
-              <div 
-                className="prose max-w-none
-                  [&_ul]:list-disc [&_ul]:pl-5 
-                  [&_ol]:list-decimal [&_ol]:pl-5 
-                  [&_li]:my-1"
-                dangerouslySetInnerHTML={{ __html: property.description }} 
-              />
-            </div>
-
+             
+             <div className="mt-6 border-t pt-6">
+  <h3 className="text-xl font-bold mb-4">Description</h3>
+  {/* 1. 'ql-snow' and 'ql-editor' restore the editor's intended arrangement.
+      2. 'prose-custom' (below) forces the vertical gaps you see in the editor.
+  */}
+ <div 
+  className="prose max-w-none text-gray-800 
+    /* 1. CRITICAL FOR MOBILE WRAPPING */
+    break-words overflow-hidden whitespace-normal
+    /* 2. SPACING AND ARRANGEMENT */
+    [&_p]:mb-4 [&_p]:leading-relaxed 
+    [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:mb-4
+    [&_li]:mb-2 [&_li]:break-words
+    /* 3. FONT SIZE SCALING */
+    text-[15px] md:text-base"
+  dangerouslySetInnerHTML={{ __html: property.description }} 
+/>
+</div>
+</div>
 
 
             <Separator />

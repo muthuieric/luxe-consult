@@ -251,7 +251,7 @@ export default function AdminPropertiesTable({ properties }: AdminPropertiesTabl
                   </Button>
                 </DialogTrigger>
                 
-                <DialogContent className="max-w-3xl max-h-[85vh] overflow-y-auto w-[95%]">
+                <DialogContent className="max-w-5xl h-[90vh] md:h-[85vh] overflow-y-auto w-[98%] p-4 md:p-6">
                   {/* Pass the property data to the form */}
                   <PropertyForm 
                     initialData={editingProperty} 

@@ -246,7 +246,7 @@ export default function PropertyForm({ initialData, onSuccess }: PropertyFormPro
           <Input type="number" name="bathrooms" placeholder="Bathrooms *" defaultValue={initialData?.bathrooms} required />
 
           {/* ✅ Fixed-height wrapper prevents page jump */}
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <label className="font-medium">Description</label>
             <div style={{ height: "220px" }}>
               <ReactQuill
@@ -259,8 +259,22 @@ export default function PropertyForm({ initialData, onSuccess }: PropertyFormPro
                 modules={quillModules}
               />
             </div>
-          </div>
+          </div> */}
 
+            {/* ✅ Responsive height wrapper */}
+            <div className="space-y-2">
+              <label className="font-medium text-sm md:text-base">Description</label>
+              <div className="min-h-[250px] md:h-[300px] mb-12 md:mb-0"> 
+                <ReactQuill
+                  theme="snow"
+                  value={description}
+                  onChange={setDescription}
+                  placeholder="Describe the property..."
+                  className="bg-white rounded-md h-[200px] md:h-[250px]"
+                  modules={quillModules}
+                />
+              </div>
+            </div>
           {/* Amenities */}
           <div className="flex flex-col gap-2">
             <label className="font-medium">Amenities</label>
